@@ -173,23 +173,28 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.container');
   container.classList.add('fade-in');
 
-  document.getElementById('playSoundButton').addEventListener('click', function() {
-  const currentWord = document.getElementById('wordInput').dataset.currentWord;
-  playWordSound(currentWord);
-});
+  // Initialize wordInput here after the DOM has loaded
+  const wordInput = document.getElementById('wordInput');
 
-  wordInput.addEventListener('keydown', function(event) {
-  if (event.code === 'Space') {
-    event.preventDefault(); // Prevent the spacebar from typing a space
+  document.getElementById('playSoundButton').addEventListener('click', function() {
     const currentWord = wordInput.dataset.currentWord;
     playWordSound(currentWord);
-  }
-});
+  });
+
+  wordInput.addEventListener('keydown', function(event) {
+    if (event.code === 'Space') {
+      event.preventDefault(); // Prevent the spacebar from typing a space
+      const currentWord = wordInput.dataset.currentWord;
+      playWordSound(currentWord);
+    }
+  });
   
-  const wordInput = document.getElementById('wordInput');
+  // Now it's safe to add event listeners to wordInput
   wordInput.addEventListener('input', handleKeyPress);
-  setNewWord(); // Set the initial word
-  wordInput.focus(); // Automatically focus the input field
+
+  // Set the initial word and focus on the input field
+  setNewWord();
+  wordInput.focus();
 
   // Attempt to play the word sound immediately
   playWordSound(wordInput.dataset.currentWord);
