@@ -37,16 +37,15 @@ function playSuccessSound() {
 
 function updateDisplayedWord(word) {
   const wordDisplay = document.getElementById('wordDisplay');
-  // Clear the previous word display
-  wordDisplay.innerHTML = '';
+  wordDisplay.innerHTML = ''; // Clear the previous word display
 
-  // Create a span for each letter in the word
-  word.split('').forEach((letter, index) => {
-    const letterSpan = document.createElement('span');
-    letterSpan.textContent = letter;
-    letterSpan.id = `letter${index}`;
-    wordDisplay.appendChild(letterSpan);
-  });
+  // Create an underscore for each letter in the word
+  for (let i = 0; i < word.length; i++) {
+    const underscoreSpan = document.createElement('span');
+    underscoreSpan.textContent = '_';
+    underscoreSpan.id = `letter${i}`;
+    wordDisplay.appendChild(underscoreSpan);
+  }
 }
 
 // Function to show a message below the word input
@@ -156,6 +155,19 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.container');
   container.classList.add('fade-in');
 
+  document.getElementById('playSoundButton').addEventListener('click', function() {
+  const currentWord = document.getElementById('wordInput').dataset.currentWord;
+  playWordSound(currentWord);
+});
+
+  wordInput.addEventListener('keydown', function(event) {
+  if (event.code === 'Space') {
+    event.preventDefault(); // Prevent the spacebar from typing a space
+    const currentWord = wordInput.dataset.currentWord;
+    playWordSound(currentWord);
+  }
+});
+  
   const wordInput = document.getElementById('wordInput');
   wordInput.addEventListener('input', handleKeyPress);
   setNewWord(); // Set the initial word
