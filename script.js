@@ -69,59 +69,77 @@ function handleKeyPress(event) {
   const typedWord = wordInput.value.toLowerCase();
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
 
-  // Update the colors of the displayed letters
-  currentWord.split('').forEach((letter, index) => {
-    const letterElement = document.getElementById(`letter${index}`);
-    if (index < typedWord.length) {
-      letterElement.className = typedWord[index] === currentWord[index] ? 'correct-letter' : 'incorrect-letter';
-    } else {
-      letterElement.className = ''; // Remove classes if the letter has not been typed yet
-    }
-  });
+  // Update the displayed underscores/letters
+  updateDisplayedLetters(typedWord, currentWord);
 
-  // Play the sound of the last letter typed
+  // Play the sound of the last letter typed, if any
   if (typedWord) {
     playLetterSound(typedWord[typedWord.length - 1]);
   }
 
   // If the word is fully and correctly typed
   if (typedWord === currentWord) {
-    inputLocked = true;
-    // Delay after the last letter sound before playing the word sound again
-    setTimeout(() => {
-      playWordSound(currentWord, () => {
-        // Determine the delay for the success sound based on the word's length
-        let successSoundDelay;
-        if (currentWord.length <= 4) {
-          successSoundDelay = 400;
-        } else if (currentWord.length >= 5 && currentWord.length <= 9) {
-          successSoundDelay = 480;
-        } else { // for 10 letters or more
-          successSoundDelay = 600;
-        }
-
-        // Delay the success sound based on the length of the word
-        setTimeout(() => {
-          playSuccessSound();
-        }, successSoundDelay);
-
-        // Show the success message shortly after the success sound starts
-        setTimeout(() => {
-          showMessage('Good job! That\'s correct!');
-          confetti(); // Play the success animation here
-          wordsTypedCount++; // Increment the words typed count
-          updateWordsTypedCountDisplay(); // Update the display
-        }, successSoundDelay - 300); // Adjust as needed
-
-        // Clear the input and set a new word a bit after the message is displayed
-        setTimeout(() => {
-          wordInput.value = ''; // Clear the input field
-          setNewWord(); // Set a new word
-        }, successSoundDelay + 2000); // This waits a bit after the message to reset
-      });
-    }, 500); // Delay before replaying the word sound after the last letter sound
+    handleCorrectWord(currentWord);
   }
 }
+
+// This new function updates the displayed underscores/letters as the user types
+function updateDisplayedLetters(typedWord, currentWord) {
+  for (let i = 0; i < currentWord.length; i++) {
+    const letterElement = document.getElementById(`letter${i}`);
+    if (i < typedWord.length) {
+      // Reveal the letter if it's correct
+      letterElement.textContent = typedWord[i] === currentWord[i] ? typedWord[i] : '_';
+    } else {
+      // Display an underscore if the letter hasn't been typed yet
+      letterElement.textContent = '_';
+    }
+  }
+}
+
+// This new function handles everything that should happen when the word is typed correctly
+function handleCorrectWord(currentWord) {
+  inputLocked = true;
+
+  // Delay after the last letter sound before playing the word sound again
+  setTimeout(() => {
+    playWordSound(currentWord, () => {
+      // Determine the delay for the success sound based on the word's length
+      let successSoundDelay = determineSuccessSoundDelay(currentWord);
+
+      // Delay the success sound based on the length of the word
+      setTimeout(() => {
+        playSuccessSound();
+      }, successSoundDelay);
+
+      // Show the success message shortly after the success sound starts
+      setTimeout(() => {
+        showMessage('Good job! That\'s correct!');
+        confetti(); // Play the success animation here
+        wordsTypedCount++; // Increment the words typed count
+        updateWordsTypedCountDisplay(); // Update the display
+      }, successSoundDelay - 300);
+
+      // Clear the input and set a new word a bit after the message is displayed
+      setTimeout(() => {
+        wordInput.value = ''; // Clear the input field
+        setNewWord(); // Set a new word
+      }, successSoundDelay + 2000); // This waits a bit after the message to reset
+    });
+  }, 500); // Delay before replaying the word sound after the last letter sound
+}
+
+// Helper function to determine the delay for the success sound based on word length
+function determineSuccessSoundDelay(word) {
+  if (word.length <= 4) {
+    return 400;
+  } else if (word.length >= 5 && word.length <= 9) {
+    return 480;
+  } else { // for 10 letters or more
+    return 600;
+  }
+}
+
 function setNewWord() {
   // Check if there are no more words to practice
   if (wordsToPractice.length === 0) {
