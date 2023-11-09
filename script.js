@@ -63,17 +63,17 @@ function updateWordsTypedCountDisplay() {
 
 // Function to handle keypresses and color changes
 function handleKeyPress(event) {
+  // Early exit if input is locked
   if (inputLocked) {
-    return; // Exit the function early if input is locked
+    return;
   }
   const typedWord = wordInput.value.toLowerCase();
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
 
-  // Update the displayed underscores/letters
   updateDisplayedLetters(typedWord, currentWord);
 
   // If the word is fully and correctly typed
-  if (typedWord === currentWord) {
+  if (typedWord === currentWord && typedWord.length === currentWord.length) {
     handleCorrectWord(currentWord);
   }
 }
@@ -177,21 +177,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize wordInput here after the DOM has loaded
   const wordInput = document.getElementById('wordInput');
-  wordInput.placeholder = "Press spacebar to start";
+  wordInput.placeholder = "Press spacebar to hear the word";
   
-  // Add an event listener for the 'keydown' event on the whole document
-  document.addEventListener('keydown', function(event) {
+  wordInput.addEventListener('keydown', function(event) {
+    // Check if the spacebar is pressed and if the input is empty to prevent triggering during typing
     if (event.code === 'Space' && wordInput.value === '') {
-      event.preventDefault(); // Prevent the spacebar from typing a space
+      event.preventDefault(); // Prevent the default space key action
       playWordSound(wordInput.dataset.currentWord);
     }
   });
 
-  // Event listener for input on the wordInput element
-  wordInput.addEventListener('input', handleKeyPress);
-
-  // Initial set up for the new word
+  // Set the initial word and focus on the input field
   setNewWord();
+  wordInput.focus();
+  
+  // Now it's safe to add event listeners to wordInput
+  wordInput.addEventListener('input', handleKeyPress);
 });
   
 
