@@ -161,7 +161,7 @@ function setNewWord() {
   wordsToPractice.splice(randomIndex, 1);
 
   // Store the current word in the dataset and set the maxlength attribute
-  wordInput.dataset.currentWord = newWord; 
+  wordInput.dataset.currentWord = newWord;
   wordInput.setAttribute('maxlength', newWord.length);
 
   // Clear any previous messages
@@ -169,6 +169,9 @@ function setNewWord() {
 
   // Unlock the input for the new word
   inputLocked = false;
+
+  // Play the sound of the new word
+  playWordSound(newWord);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
