@@ -154,7 +154,7 @@ function setNewWord() {
 
   // Set the image source based on the new word
   const wordImage = document.getElementById('wordImage');
-  wordImage.src = `images/${newWord}.png`; // Assuming the images are named exactly like the words
+  wordImage.src = `images/${newWord}.png`; // Ensure images are named exactly like the words
   wordImage.style.display = 'block'; // Show the image
 
   // Remove the used word from the array
