@@ -49,6 +49,11 @@ body {
   }
 }
 
+.word-input::placeholder {
+  /* Smaller font size for the placeholder */
+  font-size: 3vw; /* Adjust as needed */
+}
+
 /* Styles for the word display */
 #wordDisplay {
   font-family: 'Helvetica', sans-serif;
