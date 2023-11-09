@@ -178,28 +178,22 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize wordInput here after the DOM has loaded
   const wordInput = document.getElementById('wordInput');
   wordInput.placeholder = "Press spacebar to hear the word";
-
-  document.getElementById('playSoundButton').addEventListener('click', function() {
-    const currentWord = wordInput.dataset.currentWord;
-    playWordSound(currentWord);
-  });
-
-  wordInput.addEventListener('keydown', function(event) {
-    if (event.code === 'Space') {
+  
+  // Add an event listener for the 'keydown' event on the whole document
+  document.addEventListener('keydown', function(event) {
+    if (event.code === 'Space' && wordInput.value === '') {
       event.preventDefault(); // Prevent the spacebar from typing a space
-      const currentWord = wordInput.dataset.currentWord;
-      if (wordInput.value === '') {
-        playWordSound(currentWord);
-      }
+      playWordSound(wordInput.dataset.currentWord);
     }
   });
-  
-  // Now it's safe to add event listeners to wordInput
+
+  // Event listener for input on the wordInput element
   wordInput.addEventListener('input', handleKeyPress);
 
-  // Set the initial word and focus on the input field
+  // Initial set up for the new word
   setNewWord();
-  wordInput.focus();
 });
+  
+
 
 
