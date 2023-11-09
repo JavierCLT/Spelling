@@ -25,7 +25,7 @@ function playWordSound(word, callback) {
 
 // Function to play the letter sound
 function playLetterSound(letter) {
-  const letterSound = new Audio(`sounds/letter_sounds/${letter.toUpperCase()}.wav`);
+  const letterSound = new Audio(`sounds/letter sounds/${letter.toUpperCase()}.wav`);
   letterSound.play();
 }
 
