@@ -177,7 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize wordInput here after the DOM has loaded
   const wordInput = document.getElementById('wordInput');
-  wordInput.placeholder = "Press spacebar to hear the word";
+  wordInput.placeholder = "Press spacebar to start";
   
   wordInput.addEventListener('keydown', function(event) {
     // Check if the spacebar is pressed and if the input is empty to prevent triggering during typing
