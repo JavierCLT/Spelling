@@ -12,7 +12,7 @@ let inputLocked = false;
 
 // Function to play the word sound
 function playWordSound(word, callback) {
-  const wordSound = new Audio(`sounds/word_sounds/english/${word}.mp3`);
+  const wordSound = new Audio(`sounds/word_sounds/English/${word}.mp3`);
   wordSound.play();
 
   // When the sound has finished playing, call the callback if provided
