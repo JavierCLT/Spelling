@@ -1,0 +1,135 @@
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in forwards;
+}
+
+/* Base styles */
+html {
+  font-size: 100%; /* Default to 16px */
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.correct-letter {
+  color: green;
+}
+
+.incorrect-letter {
+  color: red;
+}
+
+/* Styles for the image display on desktop */
+#wordImage {
+  display: block;
+  width: 15%; /* Default for desktop */
+  height: auto;
+  margin: 20px auto;
+}
+
+/* Adjustments for tablets */
+@media (max-width: 768px) {
+  #wordImage {
+    width: 40%; /* Slightly larger on tablet screens */
+    margin: 15px auto; /* Adjust margin as needed */
+  }
+}
+
+/* Further adjustments for mobile devices */
+@media (max-width: 480px) {
+  #wordImage {
+    width: 60%; /* Even larger on mobile screens */
+    margin: 10px auto; /* Less margin on small screens */
+  }
+}
+
+/* Styles for the word display */
+#wordDisplay {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 7vw; /* Increase the font size */
+  letter-spacing: 0.00em;
+  text-align: center;
+  margin-bottom: 10px; /* Reduce bottom margin to bring closer to input */
+  width: 100%;
+}
+
+/* Styles for the input field */
+.word-input {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 7vw; /* Increase the font size */
+  width: 90%; /* Slightly less than full width to add some margin */
+  max-width: 600px; /* Ensures it's not too wide on larger screens */
+  padding: 1vw;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+  margin: 10px auto; /* Reduce margin to bring closer to word display */
+  text-align: center;
+}
+
+/* Styles for the message display */
+.message {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 2vw; /* Increase the font size */
+  text-align: center;
+  color: #333;
+}
+
+/* Center the container */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This will center children horizontally */
+  width: 100%;
+  margin: 0 auto;
+}
+
+.counter {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 3em;
+  color: #333;
+  text-align: center;
+  margin-top: 20px;
+}
+
+/* Responsive adjustments with media queries */
+@media (max-width: 768px) {
+  /* Adjustments for tablets and mobile devices */
+  #wordDisplay {
+    font-size: 10vw; /* Further increase for smaller screens */
+  }
+  
+  .word-input {
+    font-size: 10vw; /* Further increase for smaller screens */
+    padding: 4vw; /* Adjust padding as needed */
+  }
+  
+  .message {
+    font-size: 4vw;
+  }
+
+  .container {
+    margin-top: 20px; /* Add some top margin on smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  /* Further adjustments for mobile devices */
+  #wordDisplay,
+  .word-input {
+    font-size: 12vw; /* Even larger font size for very small screens */
+  }
+
+  .message {
+    font-size: 6vw;
+  }
+
+  .container {
+    margin-top: 20px; /* Add some top margin on very small screens */
+  }
+}
