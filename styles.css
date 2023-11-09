@@ -49,10 +49,6 @@ body {
   }
 }
 
-.word-input::placeholder {
-  /* Smaller font size for the placeholder */
-  font-size: 3vw; /* Adjust as needed */
-}
 
 /* Styles for the word display */
 #wordDisplay {
@@ -75,6 +71,11 @@ body {
   border-radius: 5px;
   margin: 10px auto; /* Reduce margin to bring closer to word display */
   text-align: center;
+}
+
+.word-input::placeholder {
+  /* Smaller font size for the placeholder */
+  font-size: 3vw; /* Adjust as needed */
 }
 
 /* Styles for the message display */
