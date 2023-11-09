@@ -39,10 +39,11 @@ function updateDisplayedWord(word) {
   const wordDisplay = document.getElementById('wordDisplay');
   wordDisplay.innerHTML = ''; // Clear the previous word display
 
-  // Create an underscore for each letter in the word
+  // Create an underscore for each letter in the word with a margin for separation
   for (let i = 0; i < word.length; i++) {
     const underscoreSpan = document.createElement('span');
     underscoreSpan.textContent = '_';
+    underscoreSpan.style.marginRight = '5px'; // Adjust the margin as needed
     underscoreSpan.id = `letter${i}`;
     wordDisplay.appendChild(underscoreSpan);
   }
@@ -65,17 +66,11 @@ function handleKeyPress(event) {
   if (inputLocked) {
     return; // Exit the function early if input is locked
   }
-  const wordInput = document.getElementById('wordInput');
   const typedWord = wordInput.value.toLowerCase();
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
 
   // Update the displayed underscores/letters
   updateDisplayedLetters(typedWord, currentWord);
-
-  // Play the sound of the last letter typed, if any
-  if (typedWord) {
-    playLetterSound(typedWord[typedWord.length - 1]);
-  }
 
   // If the word is fully and correctly typed
   if (typedWord === currentWord) {
@@ -146,10 +141,15 @@ function setNewWord() {
     // Reset the wordsToPractice array to start over
     wordsToPractice = [...originalWordsToPractice];
     showMessage('All words completed! Starting again...');
+    wordsTypedCount = 0; // Reset the count if needed
+    updateWordsTypedCountDisplay();
   }
 
+  // Choose a random word from the array
   const randomIndex = Math.floor(Math.random() * wordsToPractice.length);
   const newWord = wordsToPractice[randomIndex];
+
+  // Display underscores for the new word
   updateDisplayedWord(newWord);
 
   // Set the image source based on the new word
@@ -160,13 +160,15 @@ function setNewWord() {
   // Remove the used word from the array
   wordsToPractice.splice(randomIndex, 1);
 
-  const wordInput = document.getElementById('wordInput');
-  wordInput.dataset.currentWord = newWord; // Store the current word in the dataset
-  wordInput.setAttribute('maxlength', newWord.length); // Set the maxlength attribute
-  showMessage(''); // Clear any previous messages
-  playWordSound(newWord); // Play the word sound
+  // Store the current word in the dataset and set the maxlength attribute
+  wordInput.dataset.currentWord = newWord; 
+  wordInput.setAttribute('maxlength', newWord.length);
 
-  inputLocked = false; // Unlock the input for the new word
+  // Clear any previous messages
+  showMessage('');
+
+  // Unlock the input for the new word
+  inputLocked = false;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -175,6 +177,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize wordInput here after the DOM has loaded
   const wordInput = document.getElementById('wordInput');
+  wordInput.placeholder = "Press spacebar to hear the word";
 
   document.getElementById('playSoundButton').addEventListener('click', function() {
     const currentWord = wordInput.dataset.currentWord;
@@ -185,7 +188,9 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.code === 'Space') {
       event.preventDefault(); // Prevent the spacebar from typing a space
       const currentWord = wordInput.dataset.currentWord;
-      playWordSound(currentWord);
+      if (wordInput.value === '') {
+        playWordSound(currentWord);
+      }
     }
   });
   
@@ -195,7 +200,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Set the initial word and focus on the input field
   setNewWord();
   wordInput.focus();
-
-  // Attempt to play the word sound immediately
-  playWordSound(wordInput.dataset.currentWord);
 });
+
+
