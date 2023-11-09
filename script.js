@@ -177,12 +177,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize wordInput here after the DOM has loaded
   const wordInput = document.getElementById('wordInput');
-  wordInput.placeholder = "Press spacebar to start";
+  wordInput.placeholder = "Press Enter to listen";
   
-  wordInput.addEventListener('keydown', function(event) {
+  wordInput.addEventListener('keyup', function(event) {
     // Check if the spacebar is pressed and if the input is empty to prevent triggering during typing
-    if (event.code === 'Space' && wordInput.value === '') {
-      event.preventDefault(); // Prevent the default space key action
+    if (event.code === 'Enter') {
+      event.preventDefault(); // Prevent any default action
       playWordSound(wordInput.dataset.currentWord);
     }
   });
