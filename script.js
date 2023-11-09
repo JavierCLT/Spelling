@@ -178,12 +178,17 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize wordInput here after the DOM has loaded
   const wordInput = document.getElementById('wordInput');
   wordInput.placeholder = "Press Enter to listen";
-  
+
+  // Combined keyup event listener for playing letter sounds and the entire word
   wordInput.addEventListener('keyup', function(event) {
-    // Check if the spacebar is pressed and if the input is empty to prevent triggering during typing
+    // Play the sound of the whole word when Enter is pressed
     if (event.code === 'Enter') {
       event.preventDefault(); // Prevent any default action
       playWordSound(wordInput.dataset.currentWord);
+    }
+    // Play the sound of the letter typed
+    else if (event.key.length === 1 && event.key.match(/[a-z]/i)) {
+      playLetterSound(event.key);
     }
   });
 
