@@ -37,7 +37,6 @@ function playSuccessSound() {
 
 function updateDisplayedWord(word) {
   const wordDisplay = document.getElementById('wordDisplay');
-  
   wordDisplay.innerHTML = ''; // Clear the previous word display
 
   // Create an underscore for each letter in the word with a margin for separation
@@ -48,11 +47,6 @@ function updateDisplayedWord(word) {
     underscoreSpan.className = 'underscore';
     wordDisplay.appendChild(underscoreSpan);
   }
-
-  // Ensure the input box and styled overlay are empty
-  wordInput.value = '';
-  const styledOverlay = document.getElementById('styledOverlay');
-  styledOverlay.innerHTML = '';
 }
 
 // Function to show a message below the word input
@@ -69,19 +63,17 @@ function updateWordsTypedCountDisplay() {
 
 // Function to handle keypresses and color changes
 function handleKeyPress(event) {
-  // Early exit if input is locked
   if (inputLocked) {
-    return;
+    return; // Exit early if input is locked
   }
   const typedWord = wordInput.value.toLowerCase();
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
 
-  updateDisplayedLetters(typedWord, currentWord);
-  overlayTypedWord(typedWord, currentWord);
-
+  updateDisplayedLetters(typedWord, currentWord); // Update the displayed letters/underscores
+  
   // If the word is fully and correctly typed
-  if (typedWord === currentWord && typedWord.length === currentWord.length) {
-    handleCorrectWord(currentWord);
+  if (typedWord === currentWord) {
+    handleCorrectWord(currentWord); // Handle the correct word being typed
   }
 }
 
