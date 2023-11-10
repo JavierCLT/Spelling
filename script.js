@@ -71,10 +71,27 @@ function handleKeyPress(event) {
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
 
   updateDisplayedLetters(typedWord, currentWord);
+  updateTypedWordDisplay(typedWord, currentWord);
 
   // If the word is fully and correctly typed
   if (typedWord === currentWord && typedWord.length === currentWord.length) {
     handleCorrectWord(currentWord);
+  }
+}
+
+// New function to update the display of the typed word
+function updateTypedWordDisplay(typedWord, currentWord) {
+  const displayElement = document.getElementById('typedWordDisplay');
+  displayElement.innerHTML = ''; // Clear the existing content
+
+  // Create a styled version of the typed word
+  for (let i = 0; i < typedWord.length; i++) {
+    const span = document.createElement('span');
+    span.textContent = typedWord[i];
+    if (i < currentWord.length && typedWord[i] !== currentWord[i]) {
+      span.classList.add('incorrect-letter');
+    }
+    displayElement.appendChild(span);
   }
 }
 
