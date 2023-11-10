@@ -185,7 +185,7 @@ function setNewWord() {
 
   // Set the image source based on the new word
   const wordImage = document.getElementById('wordImage');
-  wordImage.src = `images/${newWord}.png`; // Ensure images are named exactly like the words
+  wordImage.src = `images/${newWord}.png`;
   wordImage.style.display = 'block'; // Show the image
 
   // Remove the used word from the array
@@ -200,6 +200,10 @@ function setNewWord() {
 
   // Unlock the input for the new word
   inputLocked = false;
+
+  // Clear the input field and the styled overlay for the new word
+  wordInput.value = '';
+  document.getElementById('styledOverlay').innerHTML = '';
 
   // Play the sound of the new word
   playWordSound(newWord);
