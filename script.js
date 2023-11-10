@@ -91,9 +91,7 @@ function handleKeyPress(event) {
   const typedWord = wordInput.value.toLowerCase();
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
 
-  updateDisplayedLetters(typedWord, currentWord); // Update visual feedback for correct/incorrect letters
-
-  // Check if the word is fully and correctly typed
+    // Check if the word is fully and correctly typed
   if (typedWord === currentWord) {
     handleCorrectWord(currentWord); // Handle the correct word being typed
   }
@@ -128,6 +126,8 @@ function updateDisplayedLetters(typedWord, currentWord) {
     }
   }
 }
+
+updateDisplayedLetters(typedWord, currentWord); // Update visual feedback for correct/incorrect letters
 
 // This new function handles everything that should happen when the word is typed correctly
 function handleCorrectWord(currentWord) {
