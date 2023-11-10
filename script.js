@@ -35,15 +35,15 @@ function playSuccessSound() {
   successSound.play();
 }
 
+// This function should visually update the word display with underscores for each letter
 function updateDisplayedWord(word) {
   const wordDisplay = document.getElementById('wordDisplay');
   wordDisplay.innerHTML = ''; // Clear the previous word display
 
-  // Create an underscore for each letter in the word with a margin for separation
+  // Create an underscore for each letter in the word
   for (let i = 0; i < word.length; i++) {
     const underscoreSpan = document.createElement('span');
     underscoreSpan.textContent = '_';
-    underscoreSpan.style.marginRight = '5px'; // Adjust the margin as needed for underscores
     underscoreSpan.className = 'underscore';
     wordDisplay.appendChild(underscoreSpan);
   }
@@ -55,42 +55,49 @@ function showMessage(message) {
   messageElement.textContent = message;
 }
 
+// Function to update the displayed underscores/letters as the user types
+function updateDisplayedLetters(typedWord, currentWord) {
+  const wordDisplay = document.getElementById('wordDisplay');
+  wordDisplay.innerHTML = ''; // Clear the previous content
+
+  // Create displayed letters or underscores based on the typedWord
+  for (let i = 0; i < currentWord.length; i++) {
+    const charSpan = document.createElement('span');
+    if (i < typedWord.length) {
+      charSpan.textContent = typedWord[i];
+      if (typedWord[i] !== currentWord[i]) {
+        // If the typed letter is incorrect, apply the 'incorrect-letter' class
+        charSpan.classList.add('incorrect-letter');
+      }
+    } else {
+      charSpan.textContent = '_';
+    }
+    wordDisplay.appendChild(charSpan);
+  }
+}
+
 // Function to update counter
 function updateWordsTypedCountDisplay() {
   const countDisplay = document.getElementById('counter');
   countDisplay.textContent = `${wordsTypedCount}`;
 }
 
-// Function to handle keypresses and color changes
+// This function handles the user's input and updates the visual feedback
 function handleKeyPress(event) {
   if (inputLocked) {
     return; // Exit early if input is locked
   }
+
   const typedWord = wordInput.value.toLowerCase();
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
 
-  updateDisplayedLetters(typedWord, currentWord); // Update the displayed letters/underscores
-  
-  // If the word is fully and correctly typed
+  updateDisplayedLetters(typedWord, currentWord); // Update visual feedback for correct/incorrect letters
+
+  // Check if the word is fully and correctly typed
   if (typedWord === currentWord) {
     handleCorrectWord(currentWord); // Handle the correct word being typed
   }
 }
-
-// New function to overlay the styled text
-function overlayTypedWord(typedWord, currentWord) {
-  const overlayElement = document.getElementById('styledOverlay');
-  overlayElement.innerHTML = ''; // Clear the existing content
-
-  // Create a styled version of the typed word
-  for (let i = 0; i < typedWord.length; i++) {
-    const span = document.createElement('span');
-    span.textContent = typedWord[i];
-    if (i < currentWord.length && typedWord[i] !== currentWord[i]) {
-      span.classList.add('incorrect-letter');
-    }
-    overlayElement.appendChild(span);
-  }
 
   // Append any remaining underscores if the typed word is shorter than the current word
   for (let i = typedWord.length; i < currentWord.length; i++) {
@@ -194,15 +201,12 @@ function setNewWord() {
   wordInput.dataset.currentWord = newWord;
   wordInput.setAttribute('maxlength', newWord.length);
 
-  // Clear any previous messages
+  // Clear any previous messages and unlock the input
   showMessage('');
-
-  // Unlock the input for the new word
   inputLocked = false;
 
-  // Clear the input field and the styled overlay for the new word
+  // Clear the input field for the new word
   wordInput.value = '';
-  document.getElementById('styledOverlay').innerHTML = '';
 
   // Play the sound of the new word
   playWordSound(newWord);
