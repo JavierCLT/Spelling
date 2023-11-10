@@ -76,8 +76,10 @@ body {
 }
 
 .input-overlay-container {
-  position: relative; /* This container must be relative for absolute children */
-  /* ... other styles ... */
+  position: relative; /* Establishes the positioning context for its absolutely positioned children */
+  width: 90%; /* Same width as your input to match sizes */
+  max-width: 600px; /* Same max width as your input */
+  margin: 10px auto; /* Center the container */
 }
 
 .styled-overlay {
