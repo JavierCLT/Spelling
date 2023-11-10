@@ -27,7 +27,7 @@ body {
 
 /* Styles for the image display on desktop */
 #wordImage {
-  display: none; /* Initially hidden, show it using JavaScript when needed */
+  display: block; /* Initially hidden, show it using JavaScript when needed */
   max-width: 15%; /* Limit image width to its container */
   height: auto; /* Maintain aspect ratio */
   object-fit: contain; /* Add this if you want to maintain aspect ratio without cropping */
