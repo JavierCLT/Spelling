@@ -27,12 +27,10 @@ body {
 
 /* Styles for the image display on desktop */
 #wordImage {
-  display: block; /* or 'none' if you are toggling visibility with JS */
-  max-width: 300px; /* Adjust the max-width as needed */
-  width: 100%; /* This will make it responsive */
-  height: auto; /* Maintain aspect ratio */
-  object-fit: contain;
-  margin: 20px auto; /* Center the image horizontally */
+  display: block;
+  width: 15%; /* Default for desktop */
+  height: auto;
+  margin: 20px auto;
 }
 
 /* Adjustments for tablets */
