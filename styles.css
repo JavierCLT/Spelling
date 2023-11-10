@@ -78,6 +78,17 @@ body {
   font-size: 3vw; /* Adjust as needed */
 }
 
+.typed-word-display {
+  font-family: 'Helvetica', sans-serif;
+  font-size: 7vw; /* Match the size of your input box */
+  text-align: center;
+  color: black;
+}
+
+.incorrect-letter {
+  color: red;
+}
+
 /* Styles for the message display */
 .message {
   font-family: 'Helvetica', sans-serif;
