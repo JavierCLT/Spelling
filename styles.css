@@ -71,7 +71,7 @@ body {
   margin: 10px auto; /* Reduce margin to bring closer to word display */
   text-align: center;
   background: transparent; /* Make input background transparent */
-  color: black; /* Hide input text color */
+  color: transparent; /* Hide input text color */
   position: relative; /* For positioning the overlay container */
   z-index: 1; /* Make sure the input is above the overlay */
 }
@@ -106,6 +106,7 @@ body {
   border-radius: 5px; /* Match the input border-radius */
   pointer-events: none; /* Allows click events to pass through to the input field */
   width: 100%; /* Ensure it covers the input field */
+  color: black; /* This will show the styled text */
   box-sizing: border-box; /* Match the input box-sizing */
 }
 
