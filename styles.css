@@ -69,6 +69,7 @@ body {
   padding: 1vw;
   border: 2px solid #ddd;
   border-radius: 5px;
+  background-color: transparent;
   margin: 10px auto; /* Reduce margin to bring closer to word display */
   text-align: center;
   position: relative; /* Needed to establish a stacking context for z-index */
