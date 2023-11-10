@@ -134,8 +134,8 @@ body {
   margin-top: 20px;
 }
 
-.small-letter {
-  uppercase-letter: 0.8em; /* or any size that is suitable */
+.uppercase-letter {
+  font-size: 0.8em; /* or any size that is suitable */
 }
 
 /* Responsive adjustments with media queries */
