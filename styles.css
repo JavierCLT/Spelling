@@ -81,6 +81,8 @@ body {
   width: 90%; /* Same width as your input to match sizes */
   max-width: 600px; /* Same max width as your input */
   margin: 10px auto; /* Center the container */
+  align-items: center; /* Centers the content vertically */
+  text-align: center;
 }
 
 .styled-overlay {
