@@ -10,6 +10,9 @@ let wordsTypedCount = 0;
 // Prevent the glitch of re-typing words quickly
 let inputLocked = false;
 
+// Global declaration of wordInput
+let wordInput;
+
 // Function to play the word sound
 function playWordSound(word, callback) {
   const wordSound = new Audio(`sounds/word_sounds/English/${word}.mp3`);
@@ -53,27 +56,6 @@ function updateDisplayedWord(word) {
 function showMessage(message) {
   const messageElement = document.getElementById('message');
   messageElement.textContent = message;
-}
-
-// Function to update the displayed underscores/letters as the user types
-function updateDisplayedLetters(typedWord, currentWord) {
-  const wordDisplay = document.getElementById('wordDisplay');
-  wordDisplay.innerHTML = ''; // Clear the previous content
-
-  // Create displayed letters or underscores based on the typedWord
-  for (let i = 0; i < currentWord.length; i++) {
-    const charSpan = document.createElement('span');
-    if (i < typedWord.length) {
-      charSpan.textContent = typedWord[i];
-      if (typedWord[i] !== currentWord[i]) {
-        // If the typed letter is incorrect, apply the 'incorrect-letter' class
-        charSpan.classList.add('incorrect-letter');
-      }
-    } else {
-      charSpan.textContent = '_';
-    }
-    wordDisplay.appendChild(charSpan);
-  }
 }
 
 // Function to update counter
@@ -209,9 +191,9 @@ document.addEventListener('DOMContentLoaded', () => {
   container.classList.add('fade-in');
 
   // Initialize wordInput here after the DOM has loaded
-  const wordInput = document.getElementById('wordInput');
+  wordInput = document.getElementById('wordInput'); // Changed to assignment
   wordInput.placeholder = "Press Enter to listen";
-
+  
   // Combined keyup event listener for playing letter sounds and the entire word
   wordInput.addEventListener('keyup', function(event) {
     // Play the sound of the whole word when Enter is pressed
