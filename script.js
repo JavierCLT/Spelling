@@ -107,6 +107,12 @@ function overlayTypedWord(typedWord, currentWord) {
       span.textContent = typedWord[i]; // Display the character as typed by the user
       span.classList.add('incorrect-letter');
     }
+
+    // If the typed character is uppercase, add the 'small-letter' class
+    if (typedWord[i] === typedWord[i].toUpperCase()) {
+      span.classList.add('small-letter');
+    }
+
     overlayElement.appendChild(span);
   }
 }
