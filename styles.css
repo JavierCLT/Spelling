@@ -134,6 +134,10 @@ body {
   margin-top: 20px;
 }
 
+.small-letter {
+  font-size: 5.5vw; /* or any size that is suitable */
+}
+
 /* Responsive adjustments with media queries */
 @media (max-width: 768px) {
   /* Adjustments for tablets and mobile devices */
