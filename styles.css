@@ -84,13 +84,16 @@ body {
 }
 
 .styled-overlay {
-  position: center; /* Position it directly over the input */
+  position: absolute; /* Position it directly over the input */
   top: 0; /* Align to the top of the parent */
   left: 0; /* Align to the left of the parent */
   right: 0; /* Stretch to the right edge of the parent */
   bottom: 0; /* Stretch to the bottom edge of the parent */
   display: flex; /* Use flexbox to align children */
   align-items: center; /* Centers the content vertically */
+  font-family: 'Helvetica', sans-serif;
+  font-size: 2vw; /* Increase the font size */
+  text-align: center;
   color: transparent; /* Makes the text color transparent */
   pointer-events: none;
   font-size: 7vw; /* Same font size as the input to match sizes */
