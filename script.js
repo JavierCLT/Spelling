@@ -63,18 +63,19 @@ function updateWordsTypedCountDisplay() {
 
 // This function handles the user's input and updates the visual feedback
 function handleKeyPress(event) {
+  // Early exit if input is locked
   if (inputLocked) {
-    return; // Exit early if input is locked
+    return;
   }
-  
   const typedWord = wordInput.value.toLowerCase();
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
-  
-  updateVisualFeedback(typedWord, currentWord); // Update visual feedback for correct/incorrect letters
 
-  // Check if the word is fully and correctly typed
-  if (typedWord === currentWord) {
-    handleCorrectWord(currentWord); // Handle the correct word being typed
+  updateDisplayedLetters(typedWord, currentWord);
+  overlayTypedWord(typedWord, currentWord);
+
+  // If the word is fully and correctly typed
+  if (typedWord === currentWord && typedWord.length === currentWord.length) {
+    handleCorrectWord(currentWord);
   }
 }
 
