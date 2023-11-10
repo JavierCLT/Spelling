@@ -225,16 +225,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const wordInput = document.getElementById('wordInput');
   wordInput.placeholder = "Press Enter to listen";
 
-  // Combined keyup event listener for playing letter sounds and the entire word
-  wordInput.addEventListener('keyup', function(event) {
-    // Play the sound of the whole word when Enter is pressed
-    if (event.code === 'Enter') {
-      event.preventDefault(); // Prevent any default action
-      playWordSound(wordInput.dataset.currentWord);
-    }
-    // Play the sound of the letter typed
-    else if (event.key.length === 1 && event.key.match(/[a-z]/i)) {
-      playLetterSound(event.key);
+  // Event listener for Enter key to start the game
+  wordInput.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter' && !isGameStarted) {
+      // Remove placeholder text
+      wordInput.placeholder = '';
+      // Start the game
+      isGameStarted = true;
+      wordInput.focus(); // Focus the input field
+      setNewWord(); // Set the first word and play the sound
     }
   });
 
