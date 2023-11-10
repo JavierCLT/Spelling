@@ -95,7 +95,6 @@ function handleKeyPress(event) {
   if (typedWord === currentWord) {
     handleCorrectWord(currentWord); // Handle the correct word being typed
   }
-}
 
   // Append any remaining underscores if the typed word is shorter than the current word
   for (let i = typedWord.length; i < currentWord.length; i++) {
