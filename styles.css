@@ -106,7 +106,7 @@ body {
 /* Styles for the message display */
 .message {
   font-family: 'Helvetica', sans-serif;
-  font-size: 2vw; /* Increase the font size */
+  font-size: 1vw; /* Increase the font size */
   text-align: center;
   color: #333;
 }
