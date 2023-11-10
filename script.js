@@ -74,14 +74,14 @@ function handleKeyPress(event) {
   if (inputLocked) {
     return;
   }
-  const typedWord = wordInput.value.toLowerCase();
-  const currentWord = wordInput.dataset.currentWord.toLowerCase();
+  const typedWord = wordInput.value;
+  const currentWord = wordInput.dataset.currentWord;
 
-  updateDisplayedLetters(typedWord, currentWord);
-  overlayTypedWord(typedWord, currentWord);
+  updateDisplayedLetters(typedWord, currentWord.toLowerCase());
+  overlayTypedWord(typedWord, currentWord.toLowerCase());
 
-  // If the word is fully and correctly typed
-  if (typedWord === currentWord && typedWord.length === currentWord.length) {
+  // If the word is fully and correctly typed (case-insensitive comparison)
+  if (typedWord.toLowerCase() === currentWord.toLowerCase() && typedWord.length === currentWord.length) {
     handleCorrectWord(currentWord);
   }
 }
