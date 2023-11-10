@@ -62,7 +62,7 @@ body {
 /* Styles for the individual underscores */
 #wordDisplay span {
   display: inline-block; /* This ensures that the margin is respected on all sides */
-  margin-right: 0.3em; /* This adds space to the right of each underscore */
+  margin-right: 0.0em; /* This adds space to the right of each underscore */
   /* Adjust margin as necessary to achieve the desired spacing */
 }
 
