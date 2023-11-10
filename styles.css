@@ -75,6 +75,11 @@ body {
   z-index: 1; /* Ensure the input is behind the overlay */
 }
 
+.input-overlay-container {
+  position: relative; /* This container must be relative for absolute children */
+  /* ... other styles ... */
+}
+
 .styled-overlay {
   position: absolute; /* Position it directly over the input */
   top: 0; /* Align to the top of the parent */
