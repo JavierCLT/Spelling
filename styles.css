@@ -27,7 +27,7 @@ body {
 
 /* Styles for the image display on desktop */
 #wordImage {
-  display: block;
+  display: none;
   width: 15%; /* Default for desktop */
   height: auto;
   margin: 20px auto;
