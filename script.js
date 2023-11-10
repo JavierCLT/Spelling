@@ -71,7 +71,7 @@ function handleKeyPress(event) {
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
 
   updateDisplayedLetters(typedWord, currentWord);
-  updateTypedWordDisplay(typedWord, currentWord);
+  overlayTypedWord(typedWord, currentWord);
 
   // If the word is fully and correctly typed
   if (typedWord === currentWord && typedWord.length === currentWord.length) {
@@ -79,10 +79,10 @@ function handleKeyPress(event) {
   }
 }
 
-// New function to update the display of the typed word
-function updateTypedWordDisplay(typedWord, currentWord) {
-  const displayElement = document.getElementById('typedWordDisplay');
-  displayElement.innerHTML = ''; // Clear the existing content
+// New function to overlay the styled text
+function overlayTypedWord(typedWord, currentWord) {
+  const overlayElement = document.getElementById('styledOverlay');
+  overlayElement.innerHTML = ''; // Clear the existing content
 
   // Create a styled version of the typed word
   for (let i = 0; i < typedWord.length; i++) {
@@ -91,7 +91,14 @@ function updateTypedWordDisplay(typedWord, currentWord) {
     if (i < currentWord.length && typedWord[i] !== currentWord[i]) {
       span.classList.add('incorrect-letter');
     }
-    displayElement.appendChild(span);
+    overlayElement.appendChild(span);
+  }
+
+  // Append any remaining underscores if the typed word is shorter than the current word
+  for (let i = typedWord.length; i < currentWord.length; i++) {
+    const span = document.createElement('span');
+    span.textContent = '_';
+    overlayElement.appendChild(span);
   }
 }
 
