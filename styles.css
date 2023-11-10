@@ -72,7 +72,6 @@ body {
   text-align: center;
   background: transparent; /* Make input background transparent */
   color: transparent; /* Hide input text color */
-  caret-color: black; /* This will keep the cursor visible */
   position: relative; /* For positioning the overlay container */
   z-index: 1; /* Make sure the input is above the overlay */
 }
