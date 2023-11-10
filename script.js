@@ -74,35 +74,38 @@ function handleKeyPress(event) {
   if (inputLocked) {
     return;
   }
-  const typedWord = wordInput.value.toLowerCase();
-  const currentWord = wordInput.dataset.currentWord.toLowerCase();
+  const typedWord = wordInput.value;
+  const currentWord = wordInput.dataset.currentWord;
 
-  updateDisplayedLetters(typedWord, currentWord);
-  overlayTypedWord(typedWord, currentWord);
+  updateDisplayedLetters(typedWord, currentWord.toLowerCase());
+  overlayTypedWord(typedWord, currentWord.toLowerCase());
 
-  // If the word is fully and correctly typed
-  if (typedWord === currentWord && typedWord.length === currentWord.length) {
+  // If the word is fully and correctly typed (case-insensitive comparison)
+  if (typedWord.toLowerCase() === currentWord.toLowerCase() && typedWord.length === currentWord.length) {
     handleCorrectWord(currentWord);
   }
 }
 
-// New function to overlay the styled text
+// Function to overlay the styled text
 function overlayTypedWord(typedWord, currentWord) {
   const overlayElement = document.getElementById('styledOverlay');
   overlayElement.innerHTML = ''; // Clear the existing content
 
-  // Create a styled version of the typed word
   for (let i = 0; i < typedWord.length; i++) {
     const span = document.createElement('span');
-    if (typedWord[i] === currentWord[i]) {
-      // Letter is correct
+    if (typedWord[i].toLowerCase() === currentWord.toLowerCase()[i]) {
       span.textContent = typedWord[i];
       span.classList.add('correct-letter');
     } else {
-      // Letter is incorrect
       span.textContent = typedWord[i];
       span.classList.add('incorrect-letter');
     }
+
+    // Check if the character is uppercase
+    if (typedWord[i] === typedWord[i].toUpperCase() && /^[A-Z]$/.test(typedWord[i])) {
+      span.classList.add('uppercase-letter');
+    }
+
     overlayElement.appendChild(span);
   }
 }
@@ -111,20 +114,19 @@ function overlayTypedWord(typedWord, currentWord) {
 function updateDisplayedLetters(typedWord, currentWord) {
   for (let i = 0; i < currentWord.length; i++) {
     const letterElement = document.getElementById(`letter${i}`);
-    
+
     if (i < typedWord.length) {
-      // Reveal the letter if it's correct
-      if (typedWord[i] === currentWord[i]) {
-        letterElement.textContent = typedWord[i];
-        letterElement.style.marginRight = '0'; // Reduce or remove the margin for letters
+      // Convert both characters to lowercase for case-insensitive comparison
+      if (typedWord[i].toLowerCase() === currentWord[i].toLowerCase()) {
+        letterElement.textContent = currentWord[i]; // Display as in the original word
+        letterElement.style.marginRight = '0';
       } else {
         letterElement.textContent = '_';
-        letterElement.style.marginRight = '5px'; // Adjust the margin as needed for underscores
+        letterElement.style.marginRight = '5px';
       }
     } else {
-      // Display an underscore if the letter hasn't been typed yet
       letterElement.textContent = '_';
-      letterElement.style.marginRight = '5px'; // Adjust the margin as needed for underscores
+      letterElement.style.marginRight = '5px';
     }
   }
 }
