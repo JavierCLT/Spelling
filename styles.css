@@ -27,10 +27,11 @@ body {
 
 /* Styles for the image display on desktop */
 #wordImage {
-  display: block;
-  width: 15%; /* Default for desktop */
+  /* Ensure that the image is not displayed with inline styles */
+  display: block; /* Remove 'display:none;' if you want to see the image */
+  max-width: 100%;
   height: auto;
-  margin: 20px auto;
+  margin: 20px auto; /* This will center the image horizontally */
 }
 
 /* Adjustments for tablets */
@@ -120,13 +121,14 @@ body {
 }
 
 /* Center the container */
-.container {
   display: flex;
   flex-direction: column;
-  align-items: center; /* This will center children horizontally */
-  width: 100%;
-  margin: 0 auto;
-}
+  align-items: center; /* Center horizontally */
+  justify-content: center; /* Center vertically */
+  width: 100%; /* Take up the full width of its parent */
+  margin: 0 auto; /* Center the container itself if it's not full width */
+  height: 100vh; /* Optional: you can give a minimum height to your container */
+
 
 .counter {
   font-family: 'Helvetica', sans-serif;
