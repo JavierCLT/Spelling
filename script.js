@@ -114,20 +114,19 @@ function overlayTypedWord(typedWord, currentWord) {
 function updateDisplayedLetters(typedWord, currentWord) {
   for (let i = 0; i < currentWord.length; i++) {
     const letterElement = document.getElementById(`letter${i}`);
-    
+
     if (i < typedWord.length) {
-      // Reveal the letter if it's correct
-      if (typedWord[i] === currentWord[i]) {
-        letterElement.textContent = typedWord[i];
-        letterElement.style.marginRight = '0'; // Reduce or remove the margin for letters
+      // Convert both characters to lowercase for case-insensitive comparison
+      if (typedWord[i].toLowerCase() === currentWord[i].toLowerCase()) {
+        letterElement.textContent = currentWord[i]; // Display as in the original word
+        letterElement.style.marginRight = '0';
       } else {
         letterElement.textContent = '_';
-        letterElement.style.marginRight = '5px'; // Adjust the margin as needed for underscores
+        letterElement.style.marginRight = '5px';
       }
     } else {
-      // Display an underscore if the letter hasn't been typed yet
       letterElement.textContent = '_';
-      letterElement.style.marginRight = '5px'; // Adjust the margin as needed for underscores
+      letterElement.style.marginRight = '5px';
     }
   }
 }
