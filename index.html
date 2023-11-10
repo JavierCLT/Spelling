@@ -9,11 +9,16 @@
 <body>
   <div class="container">
     <div id="wordDisplay" class="word-display"></div>
-    <input type="text" id="wordInput" class="word-input" autocomplete="off" placeholder="" autocapitalize="none" spellcheck="false">
-    <div id="typedWordDisplay" class="typed-word-display"></div>
+    
+    <!-- New container for input and overlay -->
+    <div class="input-overlay-container">
+      <input type="text" id="wordInput" class="word-input" autocomplete="off" placeholder="Type here..." autocapitalize="none" spellcheck="false">
+      <div id="styledOverlay" class="styled-overlay"></div>
+    </div>
+    
     <div id="message" class="message"></div>
-    <img id="wordImage" src="" alt="Word Image" style="display:none; max-width:100%;"> <!-- Make sure to style appropriately -->
-    <div id="counter" class="counter">0</div>    
+    <img id="wordImage" src="" alt="Word Image" style="display:none; max-width:100%;">
+    <div id="counter" class="counter">0</div>
   </div>
   <!-- Include the canvas-confetti script via CDN -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
