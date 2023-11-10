@@ -59,6 +59,12 @@ body {
   width: 100%;
 }
 
+.word-input::placeholder {
+  font-size: 3vw; /* Adjust the font size of the placeholder text as needed */
+  color: #888; /* Change the color if you want */
+  /* You can add other styles here if needed */
+}
+
 /* Styles for the input field */
 .word-input {
   font-family: 'Helvetica', sans-serif;
@@ -106,7 +112,7 @@ body {
 /* Styles for the message display */
 .message {
   font-family: 'Helvetica', sans-serif;
-  font-size: 3vw; /* Increase the font size */
+  font-size: 2.5vw; /* Increase the font size */
   text-align: center;
   color: #333;
 }
