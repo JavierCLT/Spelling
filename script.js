@@ -221,9 +221,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.container');
   container.classList.add('fade-in');
 
-  // Initialize wordInput here after the DOM has loaded
   const wordInput = document.getElementById('wordInput');
-  wordInput.placeholder = "Press Enter to listen";
+  // Set placeholder text for the input box
+  wordInput.placeholder = 'Press Enter to Start';
+  wordInput.addEventListener('input', handleKeyPress);
+
+  // Automatically focus on the input box as soon as the page loads
+  wordInput.focus();
 
   // Event listener for Enter key to start the game
   wordInput.addEventListener('keypress', function(event) {
@@ -232,18 +236,19 @@ document.addEventListener('DOMContentLoaded', () => {
       wordInput.placeholder = '';
       // Start the game
       isGameStarted = true;
-      wordInput.focus(); // Focus the input field
       setNewWord(); // Set the first word and play the sound
     }
   });
-
-  // Set the initial word and focus on the input field
-  setNewWord();
-  wordInput.focus();
-  
-  // Now it's safe to add event listeners to wordInput
-  wordInput.addEventListener('input', handleKeyPress);
 });
+
+function initializeGame() {
+  // Setup initial game elements here
+  // For example, preloading images, setting initial states, etc.
+}
+
+function startGame() {
+  // Start game logic can be put here if needed
+}
 
 
   
