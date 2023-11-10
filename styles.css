@@ -71,7 +71,7 @@ body {
   margin: 10px auto; /* Reduce margin to bring closer to word display */
   text-align: center;
   background: transparent; /* Make input background transparent */
-  color: black; /* Hide input text color */
+  color: transparent; /* Hide input text color */
   position: relative; /* For positioning the overlay container */
   z-index: 1; /* Make sure the input is above the overlay */
 }
