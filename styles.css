@@ -107,6 +107,7 @@ body {
   pointer-events: none; /* Allows click events to pass through to the input field */
   width: 100%; /* Ensure it covers the input field */
   color: black; /* This will show the styled text */
+  text-align: center;
   box-sizing: border-box; /* Match the input box-sizing */
 }
 
