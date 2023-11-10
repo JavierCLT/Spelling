@@ -27,11 +27,12 @@ body {
 
 /* Styles for the image display on desktop */
 #wordImage {
-  display: block; /* Initially hidden, show it using JavaScript when needed */
-  max-width: 15%; /* Limit image width to its container */
+  display: block; /* or 'none' if you are toggling visibility with JS */
+  max-width: 300px; /* Adjust the max-width as needed */
+  width: 100%; /* This will make it responsive */
   height: auto; /* Maintain aspect ratio */
-  object-fit: contain; /* Add this if you want to maintain aspect ratio without cropping */
-  margin: 20px auto; /* Center the image horizontally and add some vertical space */
+  object-fit: contain;
+  margin: 20px auto; /* Center the image horizontally */
 }
 
 /* Adjustments for tablets */
