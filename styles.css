@@ -30,14 +30,14 @@ body {
   display: block;
   width: 15%; /* Default for desktop */
   height: auto;
-  margin: 20px auto;
+  margin: auto;
 }
 
 /* Adjustments for tablets */
 @media (max-width: 768px) {
   #wordImage {
     width: 40%; /* Slightly larger on tablet screens */
-    margin: 15px auto; /* Adjust margin as needed */
+    margin: auto; /* Adjust margin as needed */
   }
 }
 
@@ -45,7 +45,7 @@ body {
 @media (max-width: 480px) {
   #wordImage {
     width: 60%; /* Even larger on mobile screens */
-    margin: 10px auto; /* Less margin on small screens */
+    margin: auto; /* Less margin on small screens */
   }
 }
 
