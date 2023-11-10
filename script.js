@@ -10,9 +10,6 @@ let wordsTypedCount = 0;
 // Prevent the glitch of re-typing words quickly
 let inputLocked = false;
 
-// Global declaration of wordInput
-let wordInput;
-
 // Function to play the word sound
 function playWordSound(word, callback) {
   const wordSound = new Audio(`sounds/word_sounds/English/${word}.mp3`);
@@ -43,10 +40,10 @@ function updateDisplayedWord(word) {
   const wordDisplay = document.getElementById('wordDisplay');
   wordDisplay.innerHTML = ''; // Clear the previous word display
 
-  // Create an underscore with a space for each letter in the word
+  // Create an underscore for each letter in the word
   for (let i = 0; i < word.length; i++) {
     const underscoreSpan = document.createElement('span');
-    underscoreSpan.textContent = '_ ';
+    underscoreSpan.textContent = '_';
     underscoreSpan.className = 'underscore';
     wordDisplay.appendChild(underscoreSpan);
   }
@@ -69,15 +66,38 @@ function handleKeyPress(event) {
   if (inputLocked) {
     return; // Exit early if input is locked
   }
-
+  
   const typedWord = wordInput.value.toLowerCase();
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
-
-  updateDisplayedLetters(typedWord, currentWord); // Update visual feedback for correct/incorrect letters
+  
+  updateVisualFeedback(typedWord, currentWord); // Update visual feedback for correct/incorrect letters
 
   // Check if the word is fully and correctly typed
   if (typedWord === currentWord) {
     handleCorrectWord(currentWord); // Handle the correct word being typed
+  }
+}
+
+// New function to overlay the styled text
+function overlayTypedWord(typedWord, currentWord) {
+  const overlayElement = document.getElementById('styledOverlay');
+  overlayElement.innerHTML = ''; // Clear the existing content
+
+  // Create a styled version of the typed word
+  for (let i = 0; i < typedWord.length; i++) {
+    const span = document.createElement('span');
+    span.textContent = typedWord[i];
+    if (i < currentWord.length && typedWord[i] !== currentWord[i]) {
+      span.classList.add('incorrect-letter');
+    }
+    overlayElement.appendChild(span);
+  }
+
+  // Append any remaining underscores if the typed word is shorter than the current word
+  for (let i = typedWord.length; i < currentWord.length; i++) {
+    const span = document.createElement('span');
+    span.textContent = '_';
+    overlayElement.appendChild(span);
   }
 }
 
@@ -93,12 +113,12 @@ function updateDisplayedLetters(typedWord, currentWord) {
         letterElement.style.marginRight = '0'; // Reduce or remove the margin for letters
       } else {
         letterElement.textContent = '_';
-        letterElement.style.marginRight = '2px'; // Adjust the margin as needed for underscores
+        letterElement.style.marginRight = '5px'; // Adjust the margin as needed for underscores
       }
     } else {
       // Display an underscore if the letter hasn't been typed yet
       letterElement.textContent = '_';
-      letterElement.style.marginRight = '2px'; // Adjust the margin as needed for underscores
+      letterElement.style.marginRight = '5px'; // Adjust the margin as needed for underscores
     }
   }
 }
@@ -175,12 +195,15 @@ function setNewWord() {
   wordInput.dataset.currentWord = newWord;
   wordInput.setAttribute('maxlength', newWord.length);
 
-  // Clear any previous messages and unlock the input
+  // Clear any previous messages
   showMessage('');
+
+  // Unlock the input for the new word
   inputLocked = false;
 
-  // Clear the input field for the new word
+  // Clear the input field and the styled overlay for the new word
   wordInput.value = '';
+  document.getElementById('styledOverlay').innerHTML = '';
 
   // Play the sound of the new word
   playWordSound(newWord);
@@ -191,9 +214,9 @@ document.addEventListener('DOMContentLoaded', () => {
   container.classList.add('fade-in');
 
   // Initialize wordInput here after the DOM has loaded
-  wordInput = document.getElementById('wordInput'); // Changed to assignment
+  const wordInput = document.getElementById('wordInput');
   wordInput.placeholder = "Press Enter to listen";
-  
+
   // Combined keyup event listener for playing letter sounds and the entire word
   wordInput.addEventListener('keyup', function(event) {
     // Play the sound of the whole word when Enter is pressed
@@ -214,6 +237,8 @@ document.addEventListener('DOMContentLoaded', () => {
   // Now it's safe to add event listeners to wordInput
   wordInput.addEventListener('input', handleKeyPress);
 });
+
+
   
 
 
