@@ -93,12 +93,12 @@ function updateDisplayedLetters(typedWord, currentWord) {
         letterElement.style.marginRight = '0'; // Reduce or remove the margin for letters
       } else {
         letterElement.textContent = '_';
-        letterElement.style.marginRight = '5px'; // Adjust the margin as needed for underscores
+        letterElement.style.marginRight = '2px'; // Adjust the margin as needed for underscores
       }
     } else {
       // Display an underscore if the letter hasn't been typed yet
       letterElement.textContent = '_';
-      letterElement.style.marginRight = '5px'; // Adjust the margin as needed for underscores
+      letterElement.style.marginRight = '2px'; // Adjust the margin as needed for underscores
     }
   }
 }
