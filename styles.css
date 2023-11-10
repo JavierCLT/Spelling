@@ -107,6 +107,7 @@ body {
   pointer-events: none; /* Allows click events to pass through to the input field */
   width: 100%; /* Ensure it covers the input field */
   box-sizing: border-box; /* Match the input box-sizing */
+  text-align: center; /* Center the text inside the styled overlay */
 }
 
 /* Styles for the message display */
