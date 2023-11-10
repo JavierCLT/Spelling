@@ -68,6 +68,7 @@ body {
   padding: 1vw;
   border: 2px solid #ddd;
   border-radius: 5px;
+  color: transparent;
   background-color: transparent;
   margin: 10px auto; /* Reduce margin to bring closer to word display */
   text-align: center;
