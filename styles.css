@@ -27,10 +27,11 @@ body {
 
 /* Styles for the image display on desktop */
 #wordImage {
-  display: block;
-  width: 15%; /* Default for desktop */
-  height: auto;
-  margin: 20px auto;
+  display: none; /* Initially hidden, show it using JavaScript when needed */
+  max-width: 15%; /* Limit image width to its container */
+  height: auto; /* Maintain aspect ratio */
+  object-fit: contain; /* Add this if you want to maintain aspect ratio without cropping */
+  margin: 20px auto; /* Center the image horizontally and add some vertical space */
 }
 
 /* Adjustments for tablets */
