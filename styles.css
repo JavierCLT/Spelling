@@ -68,7 +68,7 @@ body {
   padding: 1vw;
   border: 2px solid #ddd;
   border-radius: 5px;
-  margin: 10px auto; /* Reduce margin to bring closer to word display */
+  margin: auto; /* Reduce margin to bring closer to word display */
   text-align: center;
   background: transparent; /* Make input background transparent */
   color: transparent; /* Hide input text color */
@@ -92,7 +92,7 @@ body {
   display: inline-block; /* Align with the word input */
   width: 90%; /* Match the input width */
   max-width: 600px; /* Match the input max width */
-  margin: 10px auto;
+  margin: auto;
 }
 
 /* Styles for the overlay that will mimic the input */
