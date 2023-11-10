@@ -44,7 +44,7 @@ body {
 /* Further adjustments for mobile devices */
 @media (max-width: 480px) {
   #wordImage {
-    width: 60%; /* Even larger on mobile screens */
+    width: 100%; /* Even larger on mobile screens */
     margin: 10px auto; /* Less margin on small screens */
   }
 }
