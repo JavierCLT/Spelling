@@ -91,20 +91,16 @@ function overlayTypedWord(typedWord, currentWord) {
   const overlayElement = document.getElementById('styledOverlay');
   overlayElement.innerHTML = ''; // Clear the existing content
 
+  // Create a styled version of the typed word
   for (let i = 0; i < currentWord.length; i++) {
     const span = document.createElement('span');
     if (i < typedWord.length) {
       span.textContent = typedWord[i];
-      // Add the correct-letter class for correct letters
-      if (typedWord[i] === currentWord[i]) {
-        span.classList.add('correct-letter');
-      } else {
-        // Add the incorrect-letter class for incorrect letters
+      if (typedWord[i] !== currentWord[i]) {
         span.classList.add('incorrect-letter');
       }
     } else {
-      // Add an underscore if the letter has not been typed yet
-      span.textContent = '_';
+      span.textContent = '_'; // Keep the underscore for untyped letters
     }
     overlayElement.appendChild(span);
   }
