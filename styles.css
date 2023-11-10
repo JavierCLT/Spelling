@@ -135,7 +135,7 @@ body {
 }
 
 .small-letter {
-  uppercase-letter: 5.5vw; /* or any size that is suitable */
+  uppercase-letter: 0.8em; /* or any size that is suitable */
 }
 
 /* Responsive adjustments with media queries */
