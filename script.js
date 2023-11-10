@@ -38,15 +38,22 @@ function playSuccessSound() {
 // This function should visually update the word display with underscores for each letter
 function updateDisplayedWord(word) {
   const wordDisplay = document.getElementById('wordDisplay');
+  
   wordDisplay.innerHTML = ''; // Clear the previous word display
 
-  // Create an underscore for each letter in the word
+  // Create an underscore for each letter in the word with a margin for separation
   for (let i = 0; i < word.length; i++) {
     const underscoreSpan = document.createElement('span');
     underscoreSpan.textContent = '_';
+    underscoreSpan.style.marginRight = '5px'; // Adjust the margin as needed for underscores
     underscoreSpan.className = 'underscore';
     wordDisplay.appendChild(underscoreSpan);
   }
+
+  // Ensure the input box and styled overlay are empty
+  wordInput.value = '';
+  const styledOverlay = document.getElementById('styledOverlay');
+  styledOverlay.innerHTML = '';
 }
 
 // Function to show a message below the word input
