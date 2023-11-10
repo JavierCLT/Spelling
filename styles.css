@@ -49,7 +49,6 @@ body {
   }
 }
 
-
 /* Styles for the word display */
 #wordDisplay {
   font-family: 'Helvetica', sans-serif;
@@ -71,6 +70,15 @@ body {
   border-radius: 5px;
   margin: 10px auto; /* Reduce margin to bring closer to word display */
   text-align: center;
+  background: transparent; /* Make input background transparent */
+  color: transparent; /* Hide input text color */
+  position: relative; /* For positioning the overlay container */
+  z-index: 1; /* Make sure the input is above the overlay */
+}
+
+/* Hide the text color on autofill */
+.word-input:-webkit-autofill {
+  -webkit-text-fill-color: transparent !important;
 }
 
 .word-input::placeholder {
@@ -78,15 +86,27 @@ body {
   font-size: 3vw; /* Adjust as needed */
 }
 
-.typed-word-display {
-  font-family: 'Helvetica', sans-serif;
-  font-size: 7vw; /* Match the size of your input box */
-  text-align: center;
-  color: black;
+/* New styles for the input overlay container */
+.input-overlay-container {
+  position: relative;
+  display: inline-block; /* Align with the word input */
+  width: 90%; /* Match the input width */
+  max-width: 600px; /* Match the input max width */
+  margin: 10px auto;
 }
 
-.incorrect-letter {
-  color: red;
+/* Styles for the overlay that will mimic the input */
+.styled-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: 'Helvetica', sans-serif;
+  font-size: 7vw; /* Match the input font size */
+  padding: 1vw; /* Match the input padding */
+  border-radius: 5px; /* Match the input border-radius */
+  pointer-events: none; /* Allows click events to pass through to the input field */
+  width: 100%; /* Ensure it covers the input field */
+  box-sizing: border-box; /* Match the input box-sizing */
 }
 
 /* Styles for the message display */
@@ -117,12 +137,14 @@ body {
 /* Responsive adjustments with media queries */
 @media (max-width: 768px) {
   /* Adjustments for tablets and mobile devices */
-  #wordDisplay {
+  #wordDisplay,
+  .word-input,
+  .styled-overlay {
     font-size: 10vw; /* Further increase for smaller screens */
   }
   
-  .word-input {
-    font-size: 10vw; /* Further increase for smaller screens */
+  .word-input,
+  .styled-overlay {
     padding: 4vw; /* Adjust padding as needed */
   }
   
@@ -138,7 +160,8 @@ body {
 @media (max-width: 480px) {
   /* Further adjustments for mobile devices */
   #wordDisplay,
-  .word-input {
+  .word-input,
+  .styled-overlay {
     font-size: 12vw; /* Even larger font size for very small screens */
   }
 
