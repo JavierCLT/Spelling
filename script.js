@@ -40,10 +40,10 @@ function updateDisplayedWord(word) {
   const wordDisplay = document.getElementById('wordDisplay');
   wordDisplay.innerHTML = ''; // Clear the previous word display
 
-  // Create an underscore for each letter in the word
+  // Create an underscore with a space for each letter in the word
   for (let i = 0; i < word.length; i++) {
     const underscoreSpan = document.createElement('span');
-    underscoreSpan.textContent = '_';
+    underscoreSpan.textContent = '_ ';
     underscoreSpan.className = 'underscore';
     wordDisplay.appendChild(underscoreSpan);
   }
