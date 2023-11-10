@@ -91,26 +91,21 @@ function overlayTypedWord(typedWord, currentWord) {
   const overlayElement = document.getElementById('styledOverlay');
   overlayElement.innerHTML = ''; // Clear the existing content
 
-  // Convert currentWord to lowercase for case-insensitive comparison
   const lowerCaseCurrentWord = currentWord.toLowerCase();
 
-  // Create a styled version of the typed word
   for (let i = 0; i < typedWord.length; i++) {
     const span = document.createElement('span');
-    // Compare the lowercase versions of the characters
     if (typedWord[i].toLowerCase() === lowerCaseCurrentWord[i]) {
-      // Letter is correct
-      span.textContent = typedWord[i]; // Display the character as typed by the user
+      span.textContent = typedWord[i];
       span.classList.add('correct-letter');
     } else {
-      // Letter is incorrect
-      span.textContent = typedWord[i]; // Display the character as typed by the user
+      span.textContent = typedWord[i];
       span.classList.add('incorrect-letter');
     }
 
-    // If the typed character is uppercase, add the 'small-letter' class
-    if (typedWord[i] === typedWord[i].toUpperCase()) {
-      span.classList.add('small-letter');
+    // Check if the character is alphabetic and uppercase
+    if (/^[A-Z]$/.test(typedWord[i])) {
+      span.classList.add('uppercase-letter');
     }
 
     overlayElement.appendChild(span);
