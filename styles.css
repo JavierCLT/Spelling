@@ -49,21 +49,15 @@ body {
   }
 }
 
+
 /* Styles for the word display */
 #wordDisplay {
   font-family: 'Helvetica', sans-serif;
   font-size: 7vw; /* Increase the font size */
-  letter-spacing: 0.3em; /* Adjust space between characters */
+  letter-spacing: 0.00em;
   text-align: center;
   margin-bottom: 10px; /* Reduce bottom margin to bring closer to input */
   width: 100%;
-}
-
-/* Styles for the individual underscores */
-#wordDisplay span {
-  display: inline-block; /* This ensures that the margin is respected on all sides */
-  margin-right: 0.0em; /* This adds space to the right of each underscore */
-  /* Adjust margin as necessary to achieve the desired spacing */
 }
 
 /* Styles for the input field */
