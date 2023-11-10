@@ -74,38 +74,35 @@ function handleKeyPress(event) {
   if (inputLocked) {
     return;
   }
-  const typedWord = wordInput.value;
-  const currentWord = wordInput.dataset.currentWord;
+  const typedWord = wordInput.value.toLowerCase();
+  const currentWord = wordInput.dataset.currentWord.toLowerCase();
 
-  updateDisplayedLetters(typedWord, currentWord.toLowerCase());
-  overlayTypedWord(typedWord, currentWord.toLowerCase());
+  updateDisplayedLetters(typedWord, currentWord);
+  overlayTypedWord(typedWord, currentWord);
 
-  // If the word is fully and correctly typed (case-insensitive comparison)
-  if (typedWord.toLowerCase() === currentWord.toLowerCase() && typedWord.length === currentWord.length) {
+  // If the word is fully and correctly typed
+  if (typedWord === currentWord && typedWord.length === currentWord.length) {
     handleCorrectWord(currentWord);
   }
 }
 
-// Function to overlay the styled text
+// New function to overlay the styled text
 function overlayTypedWord(typedWord, currentWord) {
   const overlayElement = document.getElementById('styledOverlay');
   overlayElement.innerHTML = ''; // Clear the existing content
 
+  // Create a styled version of the typed word
   for (let i = 0; i < typedWord.length; i++) {
     const span = document.createElement('span');
-    if (typedWord[i].toLowerCase() === currentWord.toLowerCase()[i]) {
+    if (typedWord[i] === currentWord[i]) {
+      // Letter is correct
       span.textContent = typedWord[i];
       span.classList.add('correct-letter');
     } else {
+      // Letter is incorrect
       span.textContent = typedWord[i];
       span.classList.add('incorrect-letter');
     }
-
-    // Check if the character is uppercase
-    if (typedWord[i] === typedWord[i].toUpperCase() && /^[A-Z]$/.test(typedWord[i])) {
-      span.classList.add('uppercase-letter');
-    }
-
     overlayElement.appendChild(span);
   }
 }
@@ -114,19 +111,20 @@ function overlayTypedWord(typedWord, currentWord) {
 function updateDisplayedLetters(typedWord, currentWord) {
   for (let i = 0; i < currentWord.length; i++) {
     const letterElement = document.getElementById(`letter${i}`);
-
+    
     if (i < typedWord.length) {
-      // Convert both characters to lowercase for case-insensitive comparison
-      if (typedWord[i].toLowerCase() === currentWord[i].toLowerCase()) {
-        letterElement.textContent = currentWord[i]; // Display as in the original word
-        letterElement.style.marginRight = '0';
+      // Reveal the letter if it's correct
+      if (typedWord[i] === currentWord[i]) {
+        letterElement.textContent = typedWord[i];
+        letterElement.style.marginRight = '0'; // Reduce or remove the margin for letters
       } else {
         letterElement.textContent = '_';
-        letterElement.style.marginRight = '5px';
+        letterElement.style.marginRight = '5px'; // Adjust the margin as needed for underscores
       }
     } else {
+      // Display an underscore if the letter hasn't been typed yet
       letterElement.textContent = '_';
-      letterElement.style.marginRight = '5px';
+      letterElement.style.marginRight = '5px'; // Adjust the margin as needed for underscores
     }
   }
 }
@@ -221,34 +219,32 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.container');
   container.classList.add('fade-in');
 
+  // Initialize wordInput here after the DOM has loaded
   const wordInput = document.getElementById('wordInput');
-  // Set placeholder text for the input box
-  wordInput.placeholder = 'Press Enter to Start';
-  wordInput.addEventListener('input', handleKeyPress);
+  wordInput.placeholder = "Press Enter to listen";
 
-  // Automatically focus on the input box as soon as the page loads
-  wordInput.focus();
-
-  // Event listener for Enter key to start the game
-  wordInput.addEventListener('keypress', function(event) {
-    if (event.key === 'Enter' && !isGameStarted) {
-      // Remove placeholder text
-      wordInput.placeholder = '';
-      // Start the game
-      isGameStarted = true;
-      setNewWord(); // Set the first word and play the sound
+  // Combined keyup event listener for playing letter sounds and the entire word
+  wordInput.addEventListener('keyup', function(event) {
+    // Play the sound of the whole word when Enter is pressed
+    if (event.code === 'Enter') {
+      event.preventDefault(); // Prevent any default action
+      playWordSound(wordInput.dataset.currentWord);
+    }
+    // Play the sound of the letter typed
+    else if (event.key.length === 1 && event.key.match(/[a-z]/i)) {
+      playLetterSound(event.key);
     }
   });
+
+  // Set the initial word and focus on the input field
+  setNewWord();
+  wordInput.focus();
+  
+  // Now it's safe to add event listeners to wordInput
+  wordInput.addEventListener('input', handleKeyPress);
 });
 
-function initializeGame() {
-  // Setup initial game elements here
-  // For example, preloading images, setting initial states, etc.
-}
 
-function startGame() {
-  // Start game logic can be put here if needed
-}
 
 
   
