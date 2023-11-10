@@ -105,7 +105,6 @@ function handleKeyPress(event) {
     span.textContent = '_';
     overlayElement.appendChild(span);
   }
-}
 
 // This new function updates the displayed underscores/letters as the user types
 function updateDisplayedLetters(typedWord, currentWord) {
