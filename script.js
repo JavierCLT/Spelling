@@ -91,16 +91,11 @@ function handleKeyPress(event) {
   const typedWord = wordInput.value.toLowerCase();
   const currentWord = wordInput.dataset.currentWord.toLowerCase();
 
-    // Check if the word is fully and correctly typed
+  updateDisplayedLetters(typedWord, currentWord); // Update visual feedback for correct/incorrect letters
+
+  // Check if the word is fully and correctly typed
   if (typedWord === currentWord) {
     handleCorrectWord(currentWord); // Handle the correct word being typed
-  }
-
-  // Append any remaining underscores if the typed word is shorter than the current word
-  for (let i = typedWord.length; i < currentWord.length; i++) {
-    const span = document.createElement('span');
-    span.textContent = '_';
-    overlayElement.appendChild(span);
   }
 }
 
@@ -125,8 +120,6 @@ function updateDisplayedLetters(typedWord, currentWord) {
     }
   }
 }
-
-updateDisplayedLetters(typedWord, currentWord); // Update visual feedback for correct/incorrect letters
 
 // This new function handles everything that should happen when the word is typed correctly
 function handleCorrectWord(currentWord) {
