@@ -30,7 +30,7 @@ body {
   display: block;
   width: 15%; /* Default for desktop */
   height: auto;
-  margin: auto;
+  margin: 20px auto;
 }
 
 /* Adjustments for tablets */
