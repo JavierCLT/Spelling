@@ -38,22 +38,22 @@ function playSuccessSound() {
 // This function should visually update the word display with underscores for each letter
 function updateDisplayedWord(word) {
   const wordDisplay = document.getElementById('wordDisplay');
+  const styledOverlay = document.getElementById('styledOverlay');
+  const wordInput = document.getElementById('wordInput');
   
   wordDisplay.innerHTML = ''; // Clear the previous word display
+  styledOverlay.innerHTML = ''; // Clear the styled overlay
+  wordInput.value = ''; // Clear the input box
 
   // Create an underscore for each letter in the word with a margin for separation
   for (let i = 0; i < word.length; i++) {
     const underscoreSpan = document.createElement('span');
     underscoreSpan.textContent = '_';
-    underscoreSpan.style.marginRight = '5px'; // Adjust the margin as needed for underscores
+    underscoreSpan.style.marginRight = '5px'; // Adjust the margin as needed for separation
     underscoreSpan.className = 'underscore';
+    underscoreSpan.id = `letter${i}`; // Set the ID for each span to be used later
     wordDisplay.appendChild(underscoreSpan);
   }
-
-  // Ensure the input box and styled overlay are empty
-  wordInput.value = '';
-  const styledOverlay = document.getElementById('styledOverlay');
-  styledOverlay.innerHTML = '';
 }
 
 // Function to show a message below the word input
@@ -113,7 +113,7 @@ function overlayTypedWord(typedWord, currentWord) {
 function updateDisplayedLetters(typedWord, currentWord) {
   for (let i = 0; i < currentWord.length; i++) {
     const letterElement = document.getElementById(`letter${i}`);
-
+    
     if (i < typedWord.length) {
       // Reveal the letter if it's correct
       if (typedWord[i] === currentWord[i]) {
