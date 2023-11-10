@@ -91,11 +91,9 @@ function overlayTypedWord(typedWord, currentWord) {
   const overlayElement = document.getElementById('styledOverlay');
   overlayElement.innerHTML = ''; // Clear the existing content
 
-  const lowerCaseCurrentWord = currentWord.toLowerCase();
-
   for (let i = 0; i < typedWord.length; i++) {
     const span = document.createElement('span');
-    if (typedWord[i].toLowerCase() === lowerCaseCurrentWord[i]) {
+    if (typedWord[i].toLowerCase() === currentWord.toLowerCase()[i]) {
       span.textContent = typedWord[i];
       span.classList.add('correct-letter');
     } else {
@@ -103,8 +101,8 @@ function overlayTypedWord(typedWord, currentWord) {
       span.classList.add('incorrect-letter');
     }
 
-    // Check if the character is alphabetic and uppercase
-    if (/^[A-Z]$/.test(typedWord[i])) {
+    // Check if the character is uppercase
+    if (typedWord[i] === typedWord[i].toUpperCase() && /^[A-Z]$/.test(typedWord[i])) {
       span.classList.add('uppercase-letter');
     }
 
