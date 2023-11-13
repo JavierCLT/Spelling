@@ -56,8 +56,8 @@ body {
   letter-spacing: 0.00em;
   text-align: center;
   margin: 0 auto; /* Ensure no side margins are pushing the text off-center */
-  padding: 0; /* Ensure no padding is affecting the centering */
-  box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+  padding: 1; /* Ensure no padding is affecting the centering */
+  margin-bottom: 10px; /* Include padding and borders in the element's total width and height */
   width: 100%; /* Full width to ensure proper centering */
 }
 
