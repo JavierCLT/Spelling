@@ -146,12 +146,12 @@ body {
   }
   
   .word-input {
-    font-size: 9vw; /* Further increase for smaller screens */
+    font-size: 10vw; /* Further increase for smaller screens */
     padding: 4vw; /* Adjust padding as needed */
   }
   
   .message {
-    font-size: 4vw;
+    font-size: 6vw;
   }
 
   .container {
