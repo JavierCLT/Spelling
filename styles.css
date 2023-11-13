@@ -146,7 +146,7 @@ body {
   }
   
   .word-input {
-    font-size: 8vw; /* Further increase for smaller screens */
+    font-size: 9vw; /* Further increase for smaller screens */
     padding: 4vw; /* Adjust padding as needed */
   }
   
@@ -163,7 +163,7 @@ body {
   /* Further adjustments for mobile devices */
   #wordDisplay,
   .word-input {
-    font-size: 8vw; /* Even larger font size for very small screens */
+    font-size: 9vw; /* Even larger font size for very small screens */
   }
 
   .message {
