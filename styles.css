@@ -162,10 +162,13 @@ body {
 
 @media (max-width: 480px) {
   /* Further adjustments for mobile devices */
-  #wordDisplay,
+  #wordDisplay {
+    font-size: 8vw; /* Further increase for smaller screens */
+  }
+  
   .word-input {
-    font-size: 8vw; /* Adjust the font size for mobile devices */
-    height: 50px; /* Adjust height for mobile devices */
+    font-size: 8vw; /* Adjust the font size for tablets */
+    height: 50px; /* Adjust height for tablets */
   }
 
   .message {
