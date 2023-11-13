@@ -111,7 +111,7 @@ body {
   margin: 10px auto;
   font-size: 9vw; /* Same font size as the input to match sizes */
   z-index: 2; /* Ensures it is on top of the input field */
-  height: 50px
+  height: 70px
 }
 
 /* Styles for the message display */
