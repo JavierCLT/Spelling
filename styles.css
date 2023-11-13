@@ -146,6 +146,8 @@ body {
   /* Adjustments for tablets and mobile devices */
   #wordDisplay {
     font-size: 9vw; /* Further increase for smaller screens */
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .word-input {
@@ -167,6 +169,8 @@ body {
   /* Further adjustments for mobile devices */
   #wordDisplay {
     font-size: 9vw; /* Further increase for smaller screens */
+    margin-left: auto;
+    margin-right: auto;
   }
   
   .word-input {
