@@ -71,7 +71,7 @@ body {
   font-size: 7vw; /* Increase the font size */
   width: 100%; /* Slightly less than full width to add some margin */
   max-width: 900px; /* Ensures it's not too wide on larger screens */
-  padding: 1vw;
+  padding: 0vw;
   border: 2px solid #ddd;
   border-radius: 5px;
   color: transparent;
