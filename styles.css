@@ -71,14 +71,14 @@ body {
 .word-input {
   font-family: 'Helvetica', sans-serif;
   font-size: 7vw; /* Increase the font size */
-  width: 95%; /* Slightly less than full width to add some margin */
-  max-width: 900px; /* Ensures it's not too wide on larger screens */
+  width: 100%; /* Slightly less than full width to add some margin */
+  max-width: 800px; /* Ensures it's not too wide on larger screens */
   padding: 12px;
   border: 2px solid #ddd;
   border-radius: 5px;
   color: transparent;
   background-color: transparent;
-  margin: 20px; /* Reduce margin to bring closer to word display */
+  margin: auto; /* Reduce margin to bring closer to word display */
   text-align: center;
   position: relative; /* Needed to establish a stacking context for z-index */
   z-index: 1; /* Ensure the input is behind the overlay */
@@ -121,11 +121,10 @@ body {
 
 /* Center the container */
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* This will center children horizontally */
-  width: 100%;
-  margin: 0 auto;
+  text-align: center; /* Center text and inline elements */
+  max-width: 600px; /* Maximum width of the container */
+  margin: auto; /* Center the container */
+  padding: 20px; /* Add some padding */
 }
 
 .counter {
