@@ -76,7 +76,7 @@ body {
   border-radius: 5px;
   color: transparent;
   background-color: transparent;
-  margin: 10px auto; /* Reduce margin to bring closer to word display */
+  margin: auto; /* Reduce margin to bring closer to word display */
   text-align: center;
   position: relative; /* Needed to establish a stacking context for z-index */
   z-index: 1; /* Ensure the input is behind the overlay */
