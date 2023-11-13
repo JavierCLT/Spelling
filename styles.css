@@ -165,7 +165,7 @@ body {
   #wordDisplay,
   .word-input {
     font-size: 8vw; /* Adjust the font size for mobile devices */
-    height: 40px; /* Adjust height for mobile devices */
+    height: 50px; /* Adjust height for mobile devices */
   }
 
   .message {
