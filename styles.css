@@ -53,10 +53,10 @@ body {
 #wordDisplay {
   font-family: 'Helvetica', sans-serif;
   font-size: 7vw; /* Increase the font size */
-  letter-spacing: 0.00em;
+  letter-spacing: normal;
   text-align: center;
   margin: 0 auto; /* Ensure no side margins are pushing the text off-center */
-  padding: 1; /* Ensure no padding is affecting the centering */
+  padding: 0; /* Ensure no padding is affecting the centering */
   margin-bottom: 10px; /* Include padding and borders in the element's total width and height */
   width: 100%; /* Full width to ensure proper centering */
 }
@@ -73,12 +73,12 @@ body {
   font-size: 7vw; /* Increase the font size */
   width: 95%; /* Slightly less than full width to add some margin */
   max-width: 900px; /* Ensures it's not too wide on larger screens */
-  padding: 0vw;
+  padding: 12px;
   border: 2px solid #ddd;
   border-radius: 5px;
   color: transparent;
   background-color: transparent;
-  margin: auto; /* Reduce margin to bring closer to word display */
+  margin: 20px; /* Reduce margin to bring closer to word display */
   text-align: center;
   position: relative; /* Needed to establish a stacking context for z-index */
   z-index: 1; /* Ensure the input is behind the overlay */
