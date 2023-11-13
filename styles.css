@@ -83,6 +83,7 @@ body {
   position: relative; /* Needed to establish a stacking context for z-index */
   z-index: 1; /* Ensure the input is behind the overlay */
   height: 120px;
+  argin-top: 10px;
 }
 
 .input-overlay-container {
