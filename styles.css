@@ -27,7 +27,7 @@ body {
 
 /* Styles for the image display on desktop */
 #wordImage {
-  display: none;
+  display: block;
   width: 15%; /* Default for desktop */
   height: auto;
   margin: 20px auto;
@@ -55,6 +55,8 @@ body {
   font-size: 7vw; /* Increase the font size */
   letter-spacing: 0.00em;
   text-align: center;
+  margin: 0 auto; /* Ensure no side margins are pushing the text off-center */
+  padding: 0; /* Ensure no padding is affecting the centering */
   margin-bottom: 10px; /* Reduce bottom margin to bring closer to input */
   width: 100%;
 }
