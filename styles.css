@@ -69,7 +69,7 @@ body {
 .word-input {
   font-family: 'Helvetica', sans-serif;
   font-size: 7vw; /* Increase the font size */
-  width: 90%; /* Slightly less than full width to add some margin */
+  width: 100%; /* Slightly less than full width to add some margin */
   max-width: 900px; /* Ensures it's not too wide on larger screens */
   padding: 1vw;
   border: 2px solid #ddd;
