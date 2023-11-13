@@ -163,11 +163,11 @@ body {
   /* Further adjustments for mobile devices */
   #wordDisplay,
   .word-input {
-    font-size: 9vw; /* Even larger font size for very small screens */
+    font-size: 10vw; /* Even larger font size for very small screens */
   }
 
   .message {
-    font-size: 6vw;
+    font-size: 8vw;
   }
 
   .container {
