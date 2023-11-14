@@ -27,10 +27,12 @@ body {
 
 /* Styles for the image display on desktop */
 #wordImage {
-  display: none;
-  width: 36%; /* Default for desktop */
+  display: block;
+  width: 15%; /* Default for desktop */
   height: auto;
-  margin: 20px auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 15px;
 }
 
 /* Adjustments for tablets */
