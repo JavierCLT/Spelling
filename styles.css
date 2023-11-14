@@ -129,9 +129,11 @@ body {
 
 /* Center the container */
 .container {
-  text-align: center; /* Center text and inline elements */
-  max-width: 800px; /* Maximum width of the container */
-  margin: auto; /* Center the container */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* This will center children horizontally */
+  width: 100%;
+  margin: 0 auto;
  }
 
 .counter {
