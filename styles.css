@@ -160,7 +160,7 @@ body {
   }
   
   .word-input {
-    font-size: 9vw; /* Adjust the font size for tablets */
+    font-size: 10vw; /* Adjust the font size for tablets */
     height: 40px; /* Adjust height for tablets */
     margin-top: 10px;
   }
@@ -172,6 +172,13 @@ body {
   .container {
     margin-top: 20px; /* Add some top margin on smaller screens */
   }
+  
+  .word-input::placeholder {
+  font-size: 5vw; /* Adjust the font size of the placeholder text as needed */
+  color: #888; /* Change the color if you want */
+  /* You can add other styles here if needed */
+}
+  
 }
 
 @media (max-width: 480px) {
@@ -183,7 +190,7 @@ body {
   }
   
   .word-input {
-    font-size: 9vw; /* Adjust the font size for tablets */
+    font-size: 10vw; /* Adjust the font size for tablets */
     height: 40px; /* Adjust height for tablets */
     margin-top: 10px;
   }
@@ -195,4 +202,11 @@ body {
   .container {
     margin-top: 20px; /* Add some top margin on very small screens */
   }
+  .word-input::placeholder {
+  font-size: 5vw; /* Adjust the font size of the placeholder text as needed */
+  color: #888; /* Change the color if you want */
+  /* You can add other styles here if needed */
 }
+  
+}
+
