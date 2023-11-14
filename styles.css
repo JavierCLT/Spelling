@@ -28,7 +28,7 @@ body {
 /* Styles for the image display on desktop */
 #wordImage {
   display: none;
-  width: 40%; /* Default for desktop */
+  width: 36%; /* Default for desktop */
   height: auto;
   margin: 20px auto;
 }
