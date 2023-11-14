@@ -94,7 +94,7 @@ body {
   position: relative; /* Establishes the positioning context for its absolutely positioned children */
   width: 90%; /* Same width as your input to match sizes */
   max-width: 800px; /* Same max width as your input */
-  margin: 10px auto; /* Center the container */
+  margin: 0px auto; /* Center the container */
   align-items: center; /* Centers the content vertically */
   text-align: center;
   margin-left: auto;
