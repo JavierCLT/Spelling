@@ -66,7 +66,7 @@ body {
 .word-input::placeholder {
   font-size: 4vw; /* Adjust the font size of the placeholder text as needed */
   color: #888; /* Change the color if you want */
-  margin-bottom: 10px;
+  margin-bottom: 100px;
   /* You can add other styles here if needed */
 }
 
