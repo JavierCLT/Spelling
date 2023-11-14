@@ -154,7 +154,7 @@ body {
 @media (max-width: 768px) {
   /* Adjustments for tablets and mobile devices */
   #wordDisplay {
-    font-size: 9vw; /* Further increase for smaller screens */
+    font-size: 10vw; /* Further increase for smaller screens */
     margin-left: auto;
     margin-right: auto;
   }
@@ -177,7 +177,7 @@ body {
 @media (max-width: 480px) {
   /* Further adjustments for mobile devices */
   #wordDisplay {
-    font-size: 9vw; /* Further increase for smaller screens */
+    font-size: 10vw; /* Further increase for smaller screens */
     margin-left: auto;
     margin-right: auto;
   }
