@@ -114,7 +114,6 @@ function handleKeyPress(event) {
   if (typedWord.toLowerCase() === currentWord.toLowerCase() && typedWord.length === currentWord.length) {
     handleCorrectWord(currentWord);
   }
-}
 
 // Function to overlay the styled text
 function overlayTypedWord(typedWord, currentWord) {
