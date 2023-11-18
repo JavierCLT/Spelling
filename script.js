@@ -257,13 +257,14 @@ document.addEventListener('DOMContentLoaded', () => {
   // Combined keyup event listener for playing letter sounds and the entire word
 document.addEventListener('keyup', function(event) {
   if (event.code === 'CapsLock') {
-    isCapsLockOn = !isCapsLockOn; // Toggle the CAPS LOCK state
+    isCapsLockOn = event.getModifierState('CapsLock');
     const wordInput = document.getElementById('wordInput');
     const currentWord = wordInput.dataset.currentWord;
     const typedWord = isCapsLockOn ? wordInput.value.toUpperCase() : wordInput.value.toLowerCase();
-    
+
     wordInput.value = typedWord; // Update the input value to reflect the new case
-    updateInputDisplayAndSound(typedWord, currentWord); // Update display and play sound
+    overlayTypedWord(typedWord, currentWord); // Update the styled overlay
+    updateDisplayedLetters(typedWord, currentWord); // Update the displayed letters
   }
 });
 
