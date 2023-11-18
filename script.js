@@ -45,6 +45,13 @@ function updateDisplayedWord(word) {
   styledOverlay.innerHTML = ''; // Clear the styled overlay
   wordInput.value = ''; // Clear the input box
 
+  function checkCapsLockAndToggleCase() {
+  const wordInput = document.getElementById('wordInput');
+  const isCapsLockOn = event.getModifierState('CapsLock');
+  wordInput.value = isCapsLockOn ? wordInput.value.toUpperCase() : wordInput.value.toLowerCase();
+  overlayTypedWord(wordInput.value, wordInput.dataset.currentWord);
+}
+
   // Create an underscore for each letter in the word with a margin for separation
   for (let i = 0; i < word.length; i++) {
     const underscoreSpan = document.createElement('span');
@@ -70,10 +77,14 @@ function updateWordsTypedCountDisplay() {
 
 // This function handles the user's input and updates the visual feedback
 function handleKeyPress(event) {
+  // Check for CAPS LOCK state and toggle case
+  checkCapsLockAndToggleCase();
+
   // Early exit if input is locked
   if (inputLocked) {
     return;
   }
+
   const typedWord = wordInput.value;
   const currentWord = wordInput.dataset.currentWord;
 
@@ -238,11 +249,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // Add keydown event listener to check for CAPS LOCK toggle
+  wordInput.addEventListener('keydown', function(event) {
+    if (event.code === 'CapsLock') {
+      checkCapsLockAndToggleCase();
+    }
+  });
+
   // Set the initial word and focus on the input field
   setNewWord();
   wordInput.focus();
   
   // Now it's safe to add event listeners to wordInput
   wordInput.addEventListener('input', handleKeyPress);
-});  
-
+});
