@@ -45,7 +45,7 @@ function updateDisplayedWord(word) {
   styledOverlay.innerHTML = ''; // Clear the styled overlay
   wordInput.value = ''; // Clear the input box
 
-  function checkCapsLockAndToggleCase() {
+function checkCapsLockAndToggleCase(event) {
   const wordInput = document.getElementById('wordInput');
   const isCapsLockOn = event.getModifierState('CapsLock');
   wordInput.value = isCapsLockOn ? wordInput.value.toUpperCase() : wordInput.value.toLowerCase();
@@ -77,9 +77,10 @@ function updateWordsTypedCountDisplay() {
 
 // This function handles the user's input and updates the visual feedback
 function handleKeyPress(event) {
-  // Check for CAPS LOCK state and toggle case
-  checkCapsLockAndToggleCase();
-
+  // Only apply case toggling if a letter key is pressed
+  if (event.key.length === 1 && event.key.match(/[a-zA-Z]/)) {
+    checkCapsLockAndToggleCase(event);
+  }
   // Early exit if input is locked
   if (inputLocked) {
     return;
@@ -250,10 +251,10 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Add keydown event listener to check for CAPS LOCK toggle
-  wordInput.addEventListener('keydown', function(event) {
-    if (event.code === 'CapsLock') {
-      checkCapsLockAndToggleCase();
-    }
+wordInput.addEventListener('keydown', function(event) {
+  if (event.code === 'CapsLock') {
+    checkCapsLockAndToggleCase(event);
+  }
   });
 
   // Set the initial word and focus on the input field
