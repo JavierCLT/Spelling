@@ -10,6 +10,12 @@ let wordsTypedCount = 0;
 // Prevent the glitch of re-typing words quickly
 let inputLocked = false;
 
+let isCapsLockOn = false; // Global state for the CAPS LOCK
+
+function checkCapsLockState(event) {
+  isCapsLockOn = event.getModifierState('CapsLock');
+}
+
 // Function to play the word sound
 function playWordSound(word, callback) {
   const wordSound = new Audio(`sounds/word_sounds/English/${word}.mp3`);
@@ -45,15 +51,6 @@ function updateDisplayedWord(word) {
   styledOverlay.innerHTML = ''; // Clear the styled overlay
   wordInput.value = ''; // Clear the input box
 
-function checkCapsLockAndToggleCase(event) {
-  const wordInput = document.getElementById('wordInput');
-  const isCapsLockOn = event.getModifierState('CapsLock');
-  
-  // Update the overlay with the correct case without changing the input value
-  overlayTypedWord(isCapsLockOn ? wordInput.value.toUpperCase() : wordInput.value.toLowerCase(), 
-                   wordInput.dataset.currentWord);
-}
-
   // Create an underscore for each letter in the word with a margin for separation
   for (let i = 0; i < word.length; i++) {
     const underscoreSpan = document.createElement('span');
@@ -84,8 +81,11 @@ function handleKeyPress(event) {
     return;
   }
 
-  const typedWord = wordInput.value;
-  const currentWord = wordInput.dataset.currentWord;
+  const wordInput = document.getElementById('wordInput');
+  const typedWord = isCapsLockOn ? wordInput.value.toUpperCase() : wordInput.value.toLowerCase();
+
+  // Now call your overlay function with this adjusted 'typedWord'
+  overlayTypedWord(typedWord, wordInput.dataset.currentWord.toLowerCase());
 
   updateDisplayedLetters(typedWord, currentWord.toLowerCase());
   overlayTypedWord(typedWord, currentWord.toLowerCase());
@@ -251,8 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Add keydown event listener to check for CAPS LOCK toggle
 wordInput.addEventListener('keydown', function(event) {
   if (event.code === 'CapsLock') {
-    event.preventDefault(); // Prevent the default action for CAPS LOCK key
-    checkCapsLockAndToggleCase(event);
+    checkCapsLockState(event);
   }
 });
 
