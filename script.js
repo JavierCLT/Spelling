@@ -108,12 +108,11 @@ function handleKeyPress(event) {
   if (event.key.length === 1 && event.key.match(/[a-zA-Z]/)) {
     playLetterSound(event.key);
   }
-}
-
-  // If the word is fully and correctly typed (case-insensitive comparison)
+    // If the word is fully and correctly typed (case-insensitive comparison)
   if (typedWord.toLowerCase() === currentWord.toLowerCase() && typedWord.length === currentWord.length) {
     handleCorrectWord(currentWord);
   }
+}
 
 // Function to overlay the styled text
 function overlayTypedWord(typedWord, currentWord) {
