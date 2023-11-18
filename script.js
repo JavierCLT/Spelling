@@ -108,6 +108,7 @@ function handleKeyPress(event) {
   if (event.key.length === 1 && event.key.match(/[a-zA-Z]/)) {
     playLetterSound(event.key);
   }
+}
 
   // If the word is fully and correctly typed (case-insensitive comparison)
   if (typedWord.toLowerCase() === currentWord.toLowerCase() && typedWord.length === currentWord.length) {
@@ -257,16 +258,28 @@ document.addEventListener('DOMContentLoaded', () => {
   // Combined keyup event listener for playing letter sounds and the entire word
 document.addEventListener('keyup', function(event) {
   if (event.code === 'CapsLock') {
-    isCapsLockOn = event.getModifierState('CapsLock');
-    const wordInput = document.getElementById('wordInput');
-    const currentWord = wordInput.dataset.currentWord;
-    const typedWord = isCapsLockOn ? wordInput.value.toUpperCase() : wordInput.value.toLowerCase();
+    isCapsLockOn = !isCapsLockOn; // Toggle the state of CAPS LOCK
 
-    wordInput.value = typedWord; // Update the input value to reflect the new case
-    overlayTypedWord(typedWord, currentWord); // Update the styled overlay
-    updateDisplayedLetters(typedWord, currentWord); // Update the displayed letters
+    const wordInput = document.getElementById('wordInput');
+    wordInput.addEventListener('input', handleKeyPress);
+    const currentWord = wordInput.dataset.currentWord;
+    const typedWord = wordInput.value;
+
+    // Call a function to update the display based on CAPS LOCK state
+    updateDisplayBasedOnCapsLock(typedWord, currentWord);
   }
 });
+
+function updateDisplayBasedOnCapsLock(typedWord, currentWord) {
+  const wordInput = document.getElementById('wordInput');
+
+  // Update the input value to reflect the CAPS LOCK state without changing what's been typed
+  wordInput.value = isCapsLockOn ? typedWord.toUpperCase() : typedWord.toLowerCase();
+
+  // Update the visual display of the word and the styled overlay
+  overlayTypedWord(wordInput.value, currentWord);
+  updateDisplayedLetters(wordInput.value, currentWord);
+}
 
   // Add keydown event listener to check for CAPS LOCK toggle
 wordInput.addEventListener('keydown', function(event) {
