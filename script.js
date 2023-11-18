@@ -68,48 +68,14 @@ function updateWordsTypedCountDisplay() {
   countDisplay.textContent = `${wordsTypedCount}`;
 }
 
-// Function to set up the image overlay when a new word is set
-function setupImageOverlay(word) {
-  const imageContainer = document.getElementById('image-container');
-  imageContainer.style.width = '300px'; // Set this to your image's width
-  imageContainer.style.height = '200px'; // Set this to your image's height
-  imageContainer.innerHTML = ''; // Clear previous overlays
-
-  // Set a CSS variable for the word's length to calculate the width of the rectangles
-  imageContainer.style.setProperty('--word-length', word.length);
-
-  // Create a white rectangle for each letter in the word
-  for (let i = 0; i < word.length; i++) {
-    const overlayDiv = document.createElement('div');
-    overlayDiv.classList.add('overlay');
-    overlayDiv.style.left = `calc(${i} * (100% / ${word.length}))`;
-    imageContainer.appendChild(overlayDiv);
-  }
-}
-
-// Function to reveal the letter in the image overlay
-function revealLetter(index) {
-  const overlays = document.getElementsByClassName('overlay');
-  if (overlays[index]) {
-    overlays[index].style.backgroundColor = 'transparent';
-  }
-}
-
 // This function handles the user's input and updates the visual feedback
 function handleKeyPress(event) {
   // Early exit if input is locked
   if (inputLocked) {
     return;
   }
-  const typedWord = event.target.value;
-  const currentWord = event.target.dataset.currentWord;
-
-    // Check each letter and reveal the image accordingly
-  for (let i = 0; i < typedWord.length; i++) {
-    if (typedWord[i].toLowerCase() === currentWord[i].toLowerCase()) {
-      revealLetter(i);
-    }
-  }
+  const typedWord = wordInput.value;
+  const currentWord = wordInput.dataset.currentWord;
 
   updateDisplayedLetters(typedWord, currentWord.toLowerCase());
   overlayTypedWord(typedWord, currentWord.toLowerCase());
@@ -225,9 +191,6 @@ function setNewWord() {
   // Display underscores for the new word
   updateDisplayedWord(newWord);
 
-  // Set up the image overlay for the new word
-  setupImageOverlay(newWord);
-  
   // Set the image source based on the new word
   const wordImage = document.getElementById('wordImage');
   wordImage.src = `images/${newWord}.png`;
@@ -282,11 +245,3 @@ document.addEventListener('DOMContentLoaded', () => {
   // Now it's safe to add event listeners to wordInput
   wordInput.addEventListener('input', handleKeyPress);
 });
-
-
-
-
-  
-
-
-
