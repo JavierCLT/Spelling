@@ -18,6 +18,14 @@ function updateCapsLockState() {
   const wordInput = document.getElementById('wordInput');
   const currentWord = wordInput.dataset.currentWord;
   const typedWord = wordInput.value;
+
+function updateInputDisplayAndSound(typedWord, currentWord) {
+  overlayTypedWord(typedWord, currentWord); // Update the styled overlay
+  updateDisplayedLetters(typedWord, currentWord); // Update the displayed letters
+  if (typedWord.length > 0) {
+    playLetterSound(typedWord[typedWord.length - 1]); // Play the sound for the last typed letter
+  }
+}
   
   // Toggle the case of the input based on the CAPS LOCK state
   wordInput.value = isCapsLockOn ? typedWord.toUpperCase() : typedWord.toLowerCase();
@@ -94,9 +102,12 @@ function handleKeyPress(event) {
   const currentWord = wordInput.dataset.currentWord;
   const typedWord = wordInput.value;
 
-  // Now call your overlay function with this adjusted 'typedWord'
   overlayTypedWord(typedWord, currentWord.toLowerCase());
   updateDisplayedLetters(typedWord, currentWord.toLowerCase());
+
+  if (event.key.length === 1 && event.key.match(/[a-zA-Z]/)) {
+    playLetterSound(event.key);
+  }
 
   // If the word is fully and correctly typed (case-insensitive comparison)
   if (typedWord.toLowerCase() === currentWord.toLowerCase() && typedWord.length === currentWord.length) {
@@ -245,11 +256,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Combined keyup event listener for playing letter sounds and the entire word
 document.addEventListener('keyup', function(event) {
-  if (event.getModifierState('CapsLock') !== isCapsLockOn) {
-    // Update the CAPS LOCK state
-    isCapsLockOn = event.getModifierState('CapsLock');
-    // Update the visual state of the input
-    updateCapsLockState();
+  if (event.code === 'CapsLock') {
+    isCapsLockOn = !isCapsLockOn; // Toggle the CAPS LOCK state
+    const wordInput = document.getElementById('wordInput');
+    const currentWord = wordInput.dataset.currentWord;
+    const typedWord = isCapsLockOn ? wordInput.value.toUpperCase() : wordInput.value.toLowerCase();
+    
+    wordInput.value = typedWord; // Update the input value to reflect the new case
+    updateInputDisplayAndSound(typedWord, currentWord); // Update display and play sound
   }
 });
 
