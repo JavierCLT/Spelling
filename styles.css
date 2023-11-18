@@ -149,6 +149,19 @@ body {
   font-size: 0.8em; /* or any size that is suitable */
 }
 
+.image-container {
+  position: relative;
+  display: inline-block; /* or block if you prefer */
+}
+
+.overlay {
+  background-color: white;
+  position: absolute;
+  width: calc(100% / var(--word-length)); /* This will be set by JavaScript */
+  height: 100%;
+  transition: background-color 0.3s; /* Smooth transition for the reveal */
+}
+
 /* Responsive adjustments with media queries */
 @media (max-width: 768px) {
   /* Adjustments for tablets and mobile devices */
