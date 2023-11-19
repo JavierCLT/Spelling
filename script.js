@@ -252,6 +252,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Combined keyup event listener for playing letter sounds and the entire word
 document.addEventListener('keyup', function(event) {
+      // Play the sound of the whole word when Enter is pressed
+    if (event.code === 'Enter') {
+      event.preventDefault(); // Prevent any default action
+      playWordSound(wordInput.dataset.currentWord);
+    }
+    // Play the sound of the letter typed
+    else if (event.key.length === 1 && event.key.match(/[a-z]/i)) {
+      playLetterSound(event.key);
+    }
   if (event.code === 'CapsLock') {
     isCapsLockOn = !isCapsLockOn; // Toggle the state of CAPS LOCK
 
