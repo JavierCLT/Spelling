@@ -279,7 +279,7 @@ function updateDisplayBasedOnCapsLock(typedWord, currentWord) {
   // Add keydown event listener to check for CAPS LOCK toggle
 wordInput.addEventListener('keydown', function(event) {
   if (event.code === 'CapsLock') {
-    UpdateCapsLockState(event);
+    updateCapsLockState(event);
   }
 });
 
