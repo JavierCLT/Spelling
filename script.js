@@ -18,7 +18,7 @@ function updateCapsLockState() {
   const wordInput = document.getElementById('wordInput');
   const currentWord = wordInput.dataset.currentWord;
   const typedWord = wordInput.value;
-}
+
 
 function updateInputDisplayAndSound(typedWord, currentWord) {
   overlayTypedWord(typedWord, currentWord); // Update the styled overlay
@@ -32,7 +32,7 @@ function updateInputDisplayAndSound(typedWord, currentWord) {
   wordInput.value = isCapsLockOn ? typedWord.toUpperCase() : typedWord.toLowerCase();
   overlayTypedWord(wordInput.value, currentWord);
   updateDisplayedLetters(wordInput.value, currentWord);
-
+}
 
 // Function to play the word sound
 function playWordSound(word, callback) {
