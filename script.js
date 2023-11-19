@@ -10,29 +10,6 @@ let wordsTypedCount = 0;
 // Prevent the glitch of re-typing words quickly
 let inputLocked = false;
 
-let isCapsLockOn = false; // Global state for the CAPS LOCK
-
-function updateCapsLockState() {
-  // This function will be used to update the visual state of the input box
-  // when the CAPS LOCK key is toggled.
-  const wordInput = document.getElementById('wordInput');
-  const currentWord = wordInput.dataset.currentWord;
-  const typedWord = wordInput.value;
-
-function updateInputDisplayAndSound(typedWord, currentWord) {
-  overlayTypedWord(typedWord, currentWord); // Update the styled overlay
-  updateDisplayedLetters(typedWord, currentWord); // Update the displayed letters
-  if (typedWord.length > 0) {
-    playLetterSound(typedWord[typedWord.length - 1]); // Play the sound for the last typed letter
-  }
-}
-  
-  // Toggle the case of the input based on the CAPS LOCK state
-  wordInput.value = isCapsLockOn ? typedWord.toUpperCase() : typedWord.toLowerCase();
-  overlayTypedWord(wordInput.value, currentWord);
-  updateDisplayedLetters(wordInput.value, currentWord);
-}
-
 // Function to play the word sound
 function playWordSound(word, callback) {
   const wordSound = new Audio(`sounds/word_sounds/English/${word}.mp3`);
@@ -97,15 +74,13 @@ function handleKeyPress(event) {
   if (inputLocked) {
     return;
   }
-
-  const wordInput = document.getElementById('wordInput');
-  const currentWord = wordInput.dataset.currentWord;
   const typedWord = wordInput.value;
+  const currentWord = wordInput.dataset.currentWord;
 
-  overlayTypedWord(typedWord, currentWord.toLowerCase());
   updateDisplayedLetters(typedWord, currentWord.toLowerCase());
+  overlayTypedWord(typedWord, currentWord.toLowerCase());
 
-    // If the word is fully and correctly typed (case-insensitive comparison)
+  // If the word is fully and correctly typed (case-insensitive comparison)
   if (typedWord.toLowerCase() === currentWord.toLowerCase() && typedWord.length === currentWord.length) {
     handleCorrectWord(currentWord);
   }
@@ -251,37 +226,17 @@ document.addEventListener('DOMContentLoaded', () => {
   wordInput.placeholder = "Press Enter to listen";
 
   // Combined keyup event listener for playing letter sounds and the entire word
-document.addEventListener('keyup', function(event) {
-  if (event.code === 'CapsLock') {
-    isCapsLockOn = !isCapsLockOn; // Toggle the state of CAPS LOCK
-
-    const wordInput = document.getElementById('wordInput');
-    wordInput.addEventListener('input', handleKeyPress);
-    const currentWord = wordInput.dataset.currentWord;
-    const typedWord = wordInput.value;
-
-    // Call a function to update the display based on CAPS LOCK state
-    updateDisplayBasedOnCapsLock(typedWord, currentWord);
-  }
-});
-
-function updateDisplayBasedOnCapsLock(typedWord, currentWord) {
-  const wordInput = document.getElementById('wordInput');
-
-  // Update the input value to reflect the CAPS LOCK state without changing what's been typed
-  wordInput.value = isCapsLockOn ? typedWord.toUpperCase() : typedWord.toLowerCase();
-
-  // Update the visual display of the word and the styled overlay
-  overlayTypedWord(wordInput.value, currentWord);
-  updateDisplayedLetters(wordInput.value, currentWord);
-}
-
-  // Add keydown event listener to check for CAPS LOCK toggle
-wordInput.addEventListener('keydown', function(event) {
-  if (event.code === 'CapsLock') {
-    updateCapsLockState(event);
-  }
-});
+  wordInput.addEventListener('keyup', function(event) {
+    // Play the sound of the whole word when Enter is pressed
+    if (event.code === 'Enter') {
+      event.preventDefault(); // Prevent any default action
+      playWordSound(wordInput.dataset.currentWord);
+    }
+    // Play the sound of the letter typed
+    else if (event.key.length === 1 && event.key.match(/[a-z]/i)) {
+      playLetterSound(event.key);
+    }
+  });
 
   // Set the initial word and focus on the input field
   setNewWord();
