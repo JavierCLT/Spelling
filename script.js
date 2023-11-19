@@ -35,27 +35,6 @@ function updateInputDisplayAndSound(typedWord, currentWord) {
   updateDisplayedLetters(wordInput.value, currentWord);
 }
 
-function updateDisplayBasedOnCapsLock(typedWord, currentWord) {
-  // This function should have the same content as updateCapsLockState
-  // If they do the same thing, consider keeping only one of them.
-    // This function will be used to update the visual state of the input box
-  // when the CAPS LOCK key is toggled.
-
-function updateInputDisplayAndSound(typedWord, currentWord) {
-  overlayTypedWord(typedWord, currentWord); // Update the styled overlay
-  updateDisplayedLetters(typedWord, currentWord); // Update the displayed letters
-  if (typedWord.length > 0) {
-    playLetterSound(typedWord[typedWord.length - 1]); // Play the sound for the last typed letter
-  }
-}
-  
-  // Toggle the case of the input based on the CAPS LOCK state
-  isCapsLockOn = !isCapsLockOn;
-  wordInput.value = isCapsLockOn ? typedWord.toUpperCase() : typedWord.toLowerCase();
-  overlayTypedWord(wordInput.value, currentWord);
-  updateDisplayedLetters(wordInput.value, currentWord);
-}
-
 // Function to play the word sound
 function playWordSound(word, callback) {
   const wordSound = new Audio(`sounds/word_sounds/English/${word}.mp3`);
