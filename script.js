@@ -40,10 +40,6 @@ function updateDisplayBasedOnCapsLock(typedWord, currentWord) {
   // If they do the same thing, consider keeping only one of them.
     // This function will be used to update the visual state of the input box
   // when the CAPS LOCK key is toggled.
-  const wordInput = document.getElementById('wordInput');
-  const currentWord = wordInput.dataset.currentWord;
-  const typedWord = wordInput.value;
-
 
 function updateInputDisplayAndSound(typedWord, currentWord) {
   overlayTypedWord(typedWord, currentWord); // Update the styled overlay
@@ -58,7 +54,6 @@ function updateInputDisplayAndSound(typedWord, currentWord) {
   wordInput.value = isCapsLockOn ? typedWord.toUpperCase() : typedWord.toLowerCase();
   overlayTypedWord(wordInput.value, currentWord);
   updateDisplayedLetters(wordInput.value, currentWord);
-}
 }
 
 // Function to play the word sound
