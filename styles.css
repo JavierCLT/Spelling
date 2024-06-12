@@ -25,6 +25,10 @@ body {
   color: red;
 }
 
+.uppercase-letter {
+  text-transform: uppercase;
+}
+
 /* Styles for the image display on desktop */
 #wordImage {
   display: block;
@@ -72,11 +76,11 @@ body {
   padding: 15px;
   border: 2px solid #ddd;
   border-radius: 5px;
-  color: transparent;
-  background-color: transparent;
+  color: black; /* Ensure the text color is visible */
+  background-color: white; /* Ensure the background color is visible */
   text-align: center;
   position: relative; /* Needed to establish a stacking context for z-index */
-  z-index: 1; /* Ensure the input is behind the overlay */
+  z-index: 1; /* Ensure the input is in front of the overlay */
   height: 120px;
   margin-top: 10px;
   margin-left: auto;
@@ -144,11 +148,6 @@ body {
   color: #333;
   text-align: center;
   margin-top: 20px;
-}
-
-/* Styles for uppercase letters */
-.uppercase-letter {
-  text-transform: uppercase;
 }
 
 /* Responsive adjustments with media queries */
