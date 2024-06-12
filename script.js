@@ -10,6 +10,9 @@ let wordsTypedCount = 0;
 // Prevent the glitch of re-typing words quickly
 let inputLocked = false;
 
+// Track the Caps Lock state
+let isCapsLockActive = false;
+
 // Function to play the word sound
 function playWordSound(word, callback) {
   const wordSound = new Audio(`sounds/word_sounds/English/${word}.mp3`);
@@ -74,6 +77,7 @@ function handleKeyPress(event) {
   if (inputLocked) {
     return;
   }
+  const wordInput = document.getElementById('wordInput');
   const typedWord = wordInput.value;
   const currentWord = wordInput.dataset.currentWord;
 
@@ -200,6 +204,7 @@ function setNewWord() {
   wordsToPractice.splice(randomIndex, 1);
 
   // Store the current word in the dataset and set the maxlength attribute
+  const wordInput = document.getElementById('wordInput');
   wordInput.dataset.currentWord = newWord;
   wordInput.setAttribute('maxlength', newWord.length);
 
@@ -217,31 +222,43 @@ function setNewWord() {
   playWordSound(newWord);
 }
 
+// Function to toggle case of displayed word and input field content
+function toggleCase(event) {
+  isCapsLockActive = event.getModifierState('CapsLock');
+  const wordInput = document.getElementById('wordInput');
+  const currentWord = wordInput.dataset.currentWord;
+
+  // Update the input field content to match the Caps Lock state
+  if (isCapsLockActive) {
+    wordInput.value = wordInput.value.toUpperCase();
+  } else {
+    wordInput.value = wordInput.value.toLowerCase();
+  }
+
+  updateDisplayedWord(currentWord);
+}
+
+// Function to handle the Enter key press
+function handleEnterPress(event) {
+  if (event.key === 'Enter') {
+    const wordInput = document.getElementById('wordInput');
+    const currentWord = wordInput.dataset.currentWord;
+    playWordSound(currentWord);
+  }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const container = document.querySelector('.container');
   container.classList.add('fade-in');
 
-  // Initialize wordInput here after the DOM has loaded
   const wordInput = document.getElementById('wordInput');
-  wordInput.placeholder = "Press Enter to listen";
-
-  // Combined keyup event listener for playing letter sounds and the entire word
-  wordInput.addEventListener('keyup', function(event) {
-    // Play the sound of the whole word when Enter is pressed
-    if (event.code === 'Enter') {
-      event.preventDefault(); // Prevent any default action
-      playWordSound(wordInput.dataset.currentWord);
-    }
-    // Play the sound of the letter typed
-    else if (event.key.length === 1 && event.key.match(/[a-z]/i)) {
-      playLetterSound(event.key);
-    }
-  });
-
-  // Set the initial word and focus on the input field
-  setNewWord();
-  wordInput.focus();
-  
-  // Now it's safe to add event listeners to wordInput
   wordInput.addEventListener('input', handleKeyPress);
+  wordInput.addEventListener('keydown', toggleCase); // Add event listener for keydown to check Caps Lock state
+  wordInput.addEventListener('keyup', toggleCase); // Add event listener for keyup to check Caps Lock state
+  wordInput.addEventListener('keypress', handleEnterPress); // Add event listener for keypress to handle Enter key
+  setNewWord(); // Set the initial word
+  wordInput.focus(); // Automatically focus the input field
+
+  // Attempt to play the word sound immediately
+  playWordSound(wordInput.dataset.currentWord);
 });
