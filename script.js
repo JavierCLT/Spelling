@@ -235,7 +235,7 @@ function toggleCase(event) {
     wordInput.value = wordInput.value.toLowerCase();
   }
 
-  updateDisplayedWord(currentWord);
+  overlayTypedWord(wordInput.value, currentWord);
 }
 
 // Function to handle the Enter key press
