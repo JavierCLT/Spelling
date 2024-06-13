@@ -15,7 +15,6 @@ let isCapsLockActive = false;
 
 // Function to play the word sound
 function playWordSound(word, callback) {
-  if (!word) return;
   const wordSound = new Audio(`sounds/word_sounds/english/${word}.mp3`);
   wordSound.play();
 
@@ -39,21 +38,18 @@ function playSuccessSound() {
   successSound.play();
 }
 
-// Function to update displayed word without recreating spans
+// Function to update displayed word with underscores
 function updateDisplayedWord(word) {
   const wordDisplay = document.getElementById('wordDisplay');
+  wordDisplay.innerHTML = word.split('').map(() => '_').join(' ');
+}
 
-  // Create spans for each letter if they don't already exist
-  if (wordDisplay.children.length !== word.length) {
-    wordDisplay.innerHTML = '';
-    word.split('').forEach((letter, index) => {
-      const letterSpan = document.createElement('span');
-      letterSpan.textContent = '_';  // Display underscores
-      letterSpan.id = `letter${index}`;
-      letterSpan.style.marginRight = '10px'; // Add spacing between underscores
-      wordDisplay.appendChild(letterSpan);
-    });
-  }
+// Function to reveal letters as they are typed
+function revealLetterAt(index, letter) {
+  const wordDisplay = document.getElementById('wordDisplay');
+  const underscores = wordDisplay.textContent.split(' ');
+  underscores[index] = letter;
+  wordDisplay.textContent = underscores.join(' ');
 }
 
 // Function to show a message below the word input
@@ -72,7 +68,9 @@ function updateWordsTypedCountDisplay() {
 function handleKeyPress(event) {
   const wordInput = document.getElementById('wordInput');
   const typedWord = wordInput.value;
-  const currentWord = wordInput.dataset.currentWord ? wordInput.dataset.currentWord.toLowerCase() : ''; // Retrieve the current word
+  const currentWord = wordInput.dataset.currentWord.toLowerCase(); // Retrieve the current word
+
+  if (!currentWord) return;
 
   // Add or remove the 'uppercase' class based on the Caps Lock state
   if (isCapsLockActive) {
@@ -81,15 +79,12 @@ function handleKeyPress(event) {
     wordInput.classList.remove('uppercase');
   }
 
-  // Update the colors of the displayed letters
+  // Reveal letters as they are typed
   currentWord.split('').forEach((letter, index) => {
-    const letterElement = document.getElementById(`letter${index}`);
     if (index < typedWord.length) {
-      letterElement.textContent = typedWord[index]; // Display typed letter
-      letterElement.className = typedWord[index].toLowerCase() === currentWord[index] ? 'correct-letter' : 'incorrect-letter';
-    } else {
-      letterElement.textContent = '_';  // Display underscore for remaining letters
-      letterElement.className = ''; // Remove classes if the letter has not been typed yet
+      if (typedWord[index].toLowerCase() === currentWord[index]) {
+        revealLetterAt(index, typedWord[index]);
+      }
     }
   });
 
@@ -152,7 +147,7 @@ function setNewWord() {
   // Set the image source based on the new word
   const wordImage = document.getElementById('wordImage');
   wordImage.src = `images/${newWord}.png`; // Assuming the images are named exactly like the words
-  wordImage.style.display = 'block'; // Show the image
+  wordImage.style.display = 'none'; // Hide the image initially
 
   // Remove the used word from the array
   wordsToPractice.splice(randomIndex, 1);
@@ -161,6 +156,7 @@ function setNewWord() {
   wordInput.dataset.currentWord = newWord; // Store the current word in the dataset
   wordInput.setAttribute('maxlength', newWord.length); // Set the maxlength attribute
   showMessage(''); // Clear any previous messages
+
   inputLocked = false; // Unlock the input for the new word
 }
 
@@ -171,14 +167,10 @@ function toggleCase(event) {
   const currentWord = wordInput.dataset.currentWord;
 
   // Update the input field content to match the Caps Lock state
-  if (currentWord) {
-    if (isCapsLockActive) {
-      wordInput.value = wordInput.value.toUpperCase();
-    } else {
-      wordInput.value = wordInput.value.toLowerCase();
-    }
-
-    updateDisplayedWord(currentWord);
+  if (isCapsLockActive) {
+    wordInput.value = wordInput.value.toUpperCase();
+  } else {
+    wordInput.value = wordInput.value.toLowerCase();
   }
 }
 
@@ -187,7 +179,16 @@ function handleEnterPress(event) {
   if (event.key === 'Enter') {
     const wordInput = document.getElementById('wordInput');
     const currentWord = wordInput.dataset.currentWord;
+
+    if (!currentWord) {
+      setNewWord();
+      wordInput.placeholder = '';
+      return;
+    }
+
     playWordSound(currentWord);
+    const wordImage = document.getElementById('wordImage');
+    wordImage.style.display = 'block'; // Show the image after pressing Enter
   }
 }
 
@@ -202,4 +203,3 @@ document.addEventListener('DOMContentLoaded', () => {
   wordInput.addEventListener('keypress', handleEnterPress); // Add event listener for keypress to handle Enter key
   wordInput.focus(); // Automatically focus the input field
 });
-
