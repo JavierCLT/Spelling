@@ -1,3 +1,4 @@
+
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -18,11 +19,11 @@ body {
 }
 
 .correct-letter {
-  color: #008000;
+  color: green;
 }
 
 .incorrect-letter {
-  color: #cc0000;
+  color: red;
 }
 
 /* Styles for the image display on desktop */
@@ -39,8 +40,7 @@ body {
 @media (max-width: 768px) {
   #wordImage {
     width: 40%; /* Slightly larger on tablet screens */
-    margin-left: auto;
-    margin-right: auto;
+    margin: 15px auto; /* Adjust margin as needed */
   }
 }
 
@@ -48,34 +48,77 @@ body {
 @media (max-width: 480px) {
   #wordImage {
     width: 60%; /* Even larger on mobile screens */
-    margin-left: auto;
-    margin-right: auto;
+    margin: 10px auto; /* Less margin on small screens */
   }
 }
 
 /* Styles for the word display */
 #wordDisplay {
   font-family: 'Helvetica', sans-serif;
-  font-size: 7vw;
-  letter-spacing: normal; /* Adjust if needed */
+  font-size: 7vw; /* Increase the font size */
+  letter-spacing: normal;
   text-align: center;
   margin: 0 auto; /* Ensure no side margins are pushing the text off-center */
-  box-sizing: border-box; /* Include padding and borders in the element's total width and height */
+  padding: 0; /* Ensure no padding is affecting the centering */
+  margin-bottom: 10px; /* Include padding and borders in the element's total width and height */
   width: 100%; /* Full width to ensure proper centering */
+}
+
+.word-input::placeholder {
+  font-size: 4vw; /* Adjust the font size of the placeholder text as needed */
+  color: #888; /* Change the color if you want */
+  /* You can add other styles here if needed */
 }
 
 /* Styles for the input field */
 .word-input {
   font-family: 'Helvetica', sans-serif;
-  font-size: 7vw; /* Larger font size that adjusts based on screen width */
-  width: 90%;
-  max-width: 800px; /* Optional: You can increase this if you want a larger max width */
-  height: 120px; /* Increase the height if needed */
-  padding: 15px 0;
+  font-size: 7vw; /* Increase the font size */
+  width: 90%; /* Slightly less than full width to add some margin */
+  max-width: 800px; /* Ensures it's not too wide on larger screens */
+  padding: 15px;
   border: 2px solid #ddd;
   border-radius: 5px;
-  margin: 10px auto; /* Increase margin if you want more space around the input box */
+  color: transparent;
+  background-color: transparent;
   text-align: center;
+  position: relative; /* Needed to establish a stacking context for z-index */
+  z-index: 1; /* Ensure the input is behind the overlay */
+  height: 120px;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.input-overlay-container {
+  position: relative; /* Establishes the positioning context for its absolutely positioned children */
+  width: 90%; /* Same width as your input to match sizes */
+  max-width: 800px; /* Same max width as your input */
+  margin: 10px auto; /* Center the container */
+  align-items: center; /* Centers the content vertically */
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.styled-overlay {
+  position: absolute; /* Position it directly over the input */
+  top: 0; /* Align to the top of the parent */
+  left: 0; /* Align to the left of the parent */
+  right: 0; /* Stretch to the right edge of the parent */
+  bottom: 0; /* Stretch to the bottom edge of the parent */
+  display: flex; /* Use flexbox to align children */
+  justify-content: center;
+  align-items: center; /* Centers the content vertically */
+  font-family: 'Helvetica', sans-serif;
+  text-align: center;
+  color: transparent; /* Makes the text color transparent */
+  pointer-events: none;
+  margin: 10px auto;
+  font-size: 7vw; /* Same font size as the input to match sizes */
+  z-index: 2; /* Ensures it is on top of the input field */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* Styles for the message display */
@@ -93,7 +136,7 @@ body {
   align-items: center; /* This will center children horizontally */
   width: 100%;
   margin: 0 auto;
-}
+ }
 
 .counter {
   font-family: 'Helvetica', sans-serif;
@@ -103,56 +146,83 @@ body {
   margin-top: 20px;
 }
 
-.word-input.uppercase {
-  font-size: 7vw; /* Adjust this value as needed */
+.uppercase-letter {
+  font-size: 0.8em; /* or any size that is suitable */
 }
 
-.word-input::placeholder {
-  color: #666; /* Change placeholder text color as needed */
-  opacity: 1; /* Make sure it's fully visible */
-  font-style: italic;
+.image-container {
+  position: relative;
+  display: inline-block; /* or block if you prefer */
+}
+
+.overlay {
+  background-color: white;
+  position: absolute;
+  width: calc(100% / var(--word-length)); /* This will be set by JavaScript */
+  height: 100%;
+  transition: background-color 0.3s; /* Smooth transition for the reveal */
 }
 
 /* Responsive adjustments with media queries */
 @media (max-width: 768px) {
   /* Adjustments for tablets and mobile devices */
   #wordDisplay {
-    font-size: 9vw; /* Further increase for smaller screens */
-    height: 40px; /* Adjust height for tablets */
+    font-size: 10vw; /* Further increase for smaller screens */
     margin-left: auto;
     margin-right: auto;
   }
   
   .word-input {
-    font-size: 9vw; /* Adjust the font size for tablets */
+    font-size: 10vw; /* Adjust the font size for tablets */
     height: 40px; /* Adjust height for tablets */
     margin-top: 10px;
   }
   
   .message {
-    font-size: 4vw;
+    font-size: 6vw;
   }
 
   .container {
     margin-top: 20px; /* Add some top margin on smaller screens */
   }
-
-  .counter {
-    margin-top: 5px; /* Add some top margin on very small screens */
-  }
+  
+  .word-input::placeholder {
+  font-size: 5vw; /* Adjust the font size of the placeholder text as needed */
+  color: #888; /* Change the color if you want */
+  /* You can add other styles here if needed */
+}
+.styled-overlay {
+  position: absolute; /* Position it directly over the input */
+  top: 0; /* Align to the top of the parent */
+  left: 0; /* Align to the left of the parent */
+  right: 0; /* Stretch to the right edge of the parent */
+  bottom: 0; /* Stretch to the bottom edge of the parent */
+  display: flex; /* Use flexbox to align children */
+  justify-content: center;
+  align-items: center; /* Centers the content vertically */
+  font-family: 'Helvetica', sans-serif;
+  text-align: center;
+  color: transparent; /* Makes the text color transparent */
+  pointer-events: none;
+  margin: 10px auto;
+  font-size: 10vw; /* Same font size as the input to match sizes */
+  z-index: 2; /* Ensures it is on top of the input field */
+  height: 70px;
+  margin-left: auto;
+  margin-right: auto;
+}  
 }
 
 @media (max-width: 480px) {
   /* Further adjustments for mobile devices */
   #wordDisplay {
-    font-size: 9vw; /* Further increase for smaller screens */
-    height: 40px; /* Adjust height for tablets */
+    font-size: 10vw; /* Further increase for smaller screens */
     margin-left: auto;
     margin-right: auto;
   }
   
   .word-input {
-    font-size: 9vw; /* Adjust the font size for tablets */
+    font-size: 10vw; /* Adjust the font size for tablets */
     height: 40px; /* Adjust height for tablets */
     margin-top: 10px;
   }
@@ -164,8 +234,30 @@ body {
   .container {
     margin-top: 20px; /* Add some top margin on very small screens */
   }
-  
-  .counter {
-    margin-top: 5px; /* Add some top margin on very small screens */
-  }
+  .word-input::placeholder {
+  font-size: 5vw; /* Adjust the font size of the placeholder text as needed */
+  color: #888; /* Change the color if you want */
+  /* You can add other styles here if needed */
 }
+.styled-overlay {
+  position: absolute; /* Position it directly over the input */
+  top: 0; /* Align to the top of the parent */
+  left: 0; /* Align to the left of the parent */
+  right: 0; /* Stretch to the right edge of the parent */
+  bottom: 0; /* Stretch to the bottom edge of the parent */
+  display: flex; /* Use flexbox to align children */
+  justify-content: center;
+  align-items: center; /* Centers the content vertically */
+  font-family: 'Helvetica', sans-serif;
+  text-align: center;
+  color: transparent; /* Makes the text color transparent */
+  pointer-events: none;
+  margin: 10px auto;
+  font-size: 10vw; /* Same font size as the input to match sizes */
+  z-index: 2; /* Ensures it is on top of the input field */
+  height: 70px;
+  margin-left: auto;
+  margin-right: auto;
+}  
+}
+
