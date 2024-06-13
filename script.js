@@ -15,6 +15,7 @@ let isCapsLockActive = false;
 
 // Function to play the word sound
 function playWordSound(word, callback) {
+  if (!word) return;
   const wordSound = new Audio(`sounds/word_sounds/english/${word}.mp3`);
   wordSound.play();
 
@@ -71,7 +72,7 @@ function updateWordsTypedCountDisplay() {
 function handleKeyPress(event) {
   const wordInput = document.getElementById('wordInput');
   const typedWord = wordInput.value;
-  const currentWord = wordInput.dataset.currentWord.toLowerCase(); // Retrieve the current word
+  const currentWord = wordInput.dataset.currentWord ? wordInput.dataset.currentWord.toLowerCase() : ''; // Retrieve the current word
 
   // Add or remove the 'uppercase' class based on the Caps Lock state
   if (isCapsLockActive) {
@@ -170,13 +171,15 @@ function toggleCase(event) {
   const currentWord = wordInput.dataset.currentWord;
 
   // Update the input field content to match the Caps Lock state
-  if (isCapsLockActive) {
-    wordInput.value = wordInput.value.toUpperCase();
-  } else {
-    wordInput.value = wordInput.value.toLowerCase();
-  }
+  if (currentWord) {
+    if (isCapsLockActive) {
+      wordInput.value = wordInput.value.toUpperCase();
+    } else {
+      wordInput.value = wordInput.value.toLowerCase();
+    }
 
-  updateDisplayedWord(currentWord);
+    updateDisplayedWord(currentWord);
+  }
 }
 
 // Function to handle the Enter key press
