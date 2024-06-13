@@ -39,7 +39,7 @@ function playSuccessSound() {
 }
 
 // Function to update displayed word without recreating spans
-function updateDisplayedWord(word, isUppercase = false) {
+function updateDisplayedWord(word) {
   const wordDisplay = document.getElementById('wordDisplay');
 
   // Create spans for each letter if they don't already exist
@@ -49,6 +49,7 @@ function updateDisplayedWord(word, isUppercase = false) {
       const letterSpan = document.createElement('span');
       letterSpan.textContent = '_';  // Display underscores
       letterSpan.id = `letter${index}`;
+      letterSpan.style.marginRight = '10px'; // Add spacing between underscores
       wordDisplay.appendChild(letterSpan);
     });
   }
@@ -83,7 +84,7 @@ function handleKeyPress(event) {
   currentWord.split('').forEach((letter, index) => {
     const letterElement = document.getElementById(`letter${index}`);
     if (index < typedWord.length) {
-      letterElement.textContent = typedWord[index].toUpperCase(); // Display typed letter in uppercase if Caps Lock is active
+      letterElement.textContent = typedWord[index]; // Display typed letter
       letterElement.className = typedWord[index].toLowerCase() === currentWord[index] ? 'correct-letter' : 'incorrect-letter';
     } else {
       letterElement.textContent = '_';  // Display underscore for remaining letters
@@ -145,7 +146,7 @@ function setNewWord() {
 
   const randomIndex = Math.floor(Math.random() * wordsToPractice.length);
   const newWord = wordsToPractice[randomIndex];
-  updateDisplayedWord(newWord, isCapsLockActive);
+  updateDisplayedWord(newWord);
 
   // Set the image source based on the new word
   const wordImage = document.getElementById('wordImage');
@@ -159,8 +160,6 @@ function setNewWord() {
   wordInput.dataset.currentWord = newWord; // Store the current word in the dataset
   wordInput.setAttribute('maxlength', newWord.length); // Set the maxlength attribute
   showMessage(''); // Clear any previous messages
-  playWordSound(newWord); // Play the word sound
-
   inputLocked = false; // Unlock the input for the new word
 }
 
@@ -177,7 +176,7 @@ function toggleCase(event) {
     wordInput.value = wordInput.value.toLowerCase();
   }
 
-  updateDisplayedWord(currentWord, isCapsLockActive);
+  updateDisplayedWord(currentWord);
 }
 
 // Function to handle the Enter key press
@@ -198,9 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
   wordInput.addEventListener('keydown', toggleCase); // Add event listener for keydown to check Caps Lock state
   wordInput.addEventListener('keyup', toggleCase); // Add event listener for keyup to check Caps Lock state
   wordInput.addEventListener('keypress', handleEnterPress); // Add event listener for keypress to handle Enter key
-  setNewWord(); // Set the initial word
   wordInput.focus(); // Automatically focus the input field
-
-  // Attempt to play the word sound immediately
-  playWordSound(wordInput.dataset.currentWord);
 });
+
