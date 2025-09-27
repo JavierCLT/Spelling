@@ -1,28 +1,73 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Typing Practice for Kids</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta
+    name="viewport"
+    content="width=device-width,initial-scale=1,viewport-fit=cover"
+  />
+  <title>Say & Spell</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <div class="container">
-    <div id="wordDisplay" class="word-display"></div>
-    
-    <!-- New container for input and overlay -->
-    <div class="input-overlay-container">
-      <input type="text" id="wordInput" class="word-input" autocomplete="off" placeholder="Type here..." autocapitalize="none" spellcheck="false">
-      <div id="styledOverlay" class="styled-overlay"></div>
-    </div>
-    
-    <div id="message" class="message"></div>
-    <img id="wordImage" src="" alt="Word Image">
-    <div id="counter" class="counter">0</div>
+  <div class="container" role="application">
+    <header class="toolbar" aria-label="controls">
+      <div class="left">
+        <button id="btnNew" class="btn" aria-label="New word (skip)">↻ New</button>
+        <button id="btnHear" class="btn" aria-label="Hear the word">▶︎ Hear</button>
+        <button id="btnHearSlow" class="btn" aria-label="Hear the word slowly">🐢 Slow</button>
+        <button id="btnSegment" class="btn" aria-label="Hear by sounds (boxes)">🔊 Sounds</button>
+        <button id="btnHint" class="btn" aria-label="Get a hint (next letter)">💡 Hint</button>
+      </div>
+      <div class="right">
+        <label class="inline">Language
+          <select id="langSelect" aria-label="Choose language">
+            <option value="en" selected>English</option>
+            <option value="es">Español</option>
+          </select>
+        </label>
+        <label class="inline">Level
+          <select id="levelSelect" aria-label="Choose difficulty"></select>
+        </label>
+      </div>
+    </header>
+
+    <main>
+      <figure class="picture">
+        <img id="wordImage" src="" alt="" />
+        <figcaption id="picCaption" class="sr-only"></figcaption>
+      </figure>
+
+      <div id="wordDisplay" class="word-display" aria-live="polite"
+           aria-label="underscores showing the letters in the word"></div>
+
+      <!-- REAL PHONEME (ELKONIN) BOXES -->
+      <div id="elkoninBoxes" class="boxes" aria-label="sound boxes (phonemes)"></div>
+
+      <div class="input-overlay-container">
+        <input id="wordInput" class="word-input"
+               autocomplete="off" autocapitalize="none" spellcheck="false"
+               inputmode="latin" placeholder="Type here…" aria-label="Type the word" />
+        <div id="styledOverlay" class="styled-overlay" aria-hidden="true"></div>
+      </div>
+
+      <div id="onscreenKeyboard" class="keyboard" aria-label="On-screen keyboard"></div>
+
+      <p id="message" class="message" role="status"></p>
+
+      <div class="hud" aria-label="progress">
+        <span>Words: <strong id="counter">0</strong></span>
+        <span>Streak: <strong id="streak">0</strong></span>
+      </div>
+    </main>
   </div>
-  <!-- Include the canvas-confetti script via CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="script.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <script defer src="script.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(() => {});
+    }
+  </script>
 </body>
 </html>
