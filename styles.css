@@ -259,5 +259,30 @@ body {
   margin-left: auto;
   margin-right: auto;
 }  
+
+  /* Phoneme (Elkonin) boxes */
+.boxes { display: flex; gap: 8px; justify-content: center; margin: 10px 0 8px; flex-wrap: wrap; }
+.boxes .box {
+  width: clamp(38px, 8vw, 56px);
+  height: clamp(38px, 8vw, 56px);
+  border-radius: 10px; border: 2px solid #ddd; background: #fff;
+  display: grid; place-items: center; font-weight: 700; user-select: none;
 }
+.box.partial { opacity: .7; }
+.box.active { outline: 3px solid rgba(0,0,0,.2); }
+.box.ok { border-color: #1a7f37; }   /* correct box */
+
+/* Overlay coloring (kept) */
+.styled-overlay .ok { color: #1a7f37; }
+.styled-overlay .bad { color: #d1242f; }
+.styled-overlay .next { color: #b8860b; opacity: .25; }
+
+/* On-screen keyboard (letters only + backspace/enter) */
+.keyboard { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; max-width: 520px; margin: 10px auto; }
+.key { padding: .65rem 0; border-radius: 8px; border: 1px solid #ddd; background: #fff; font-size: 20px; cursor: pointer; }
+.key:active { transform: translateY(1px); }
+.key.wide { grid-column: span 2; }
+  
+}
+
 
