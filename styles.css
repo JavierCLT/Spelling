@@ -1,262 +1,279 @@
+/* Minimal, high-contrast, responsive. No frameworks. */
+:root{
+  --bg: #ffffff;
+  --text: #111;
+  --muted: #666;
+  --muted-2: #949494;
+  --ok: #0a8f3a;
+  --bad: #c62828;
+  --accent: #0f6;
+  --bar: #111;
+  --bar-partial: #2a5bd7;
+  --bar-done: #0f6;
+  --ring: #1e88e5;
+  --card: #f6f7f8;
+  --btn: #111;
+  --btn-on: #fff;
+  --shadow: 0 2px 10px rgba(0,0,0,.08);
+  --mono: "Andika", "Andika Basic", ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --sans: "Andika", "Andika Basic", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  /* Shared play area sizing/padding so bars align with input */
+  --play-max: 820px;          /* larger input width */
+  --play-pad-x: 1.2rem;       /* horizontal padding for input & bars */
+  --play-pad-y: 1rem;         /* vertical padding for input */
+  --bar-gap: 8px;             /* gap between bars (and overlay chunk cells) */
 }
 
-.fade-in {
-  animation: fadeIn 0.5s ease-in forwards;
+/* Optional local Andika:
+@font-face{
+  font-family: "Andika";
+  src: url("./fonts/Andika.woff2") format("woff2");
+  font-display: swap;
 }
+*/
 
-/* Base styles */
-html {
-  font-size: 100%; /* Default to 16px */
-}
-
-body {
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body{
   margin: 0;
-  padding: 0;
+  font-family: var(--sans);
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.35;
 }
 
-.correct-letter {
-  color: green;
-}
-
-.incorrect-letter {
-  color: red;
-}
-
-/* Styles for the image display on desktop */
-#wordImage {
-  display: block;
-  width: 15%; /* Default for desktop */
-  height: auto;
-  margin-left: auto;
-  margin-right: auto;
-  margin-top: 15px;
-}
-
-/* Adjustments for tablets */
-@media (max-width: 768px) {
-  #wordImage {
-    width: 40%; /* Slightly larger on tablet screens */
-    margin: 15px auto; /* Adjust margin as needed */
-  }
-}
-
-/* Further adjustments for mobile devices */
-@media (max-width: 480px) {
-  #wordImage {
-    width: 60%; /* Even larger on mobile screens */
-    margin: 10px auto; /* Less margin on small screens */
-  }
-}
-
-/* Styles for the word display */
-#wordDisplay {
-  font-family: 'Helvetica', sans-serif;
-  font-size: 7vw; /* Increase the font size */
-  letter-spacing: normal;
-  text-align: center;
-  margin: 0 auto; /* Ensure no side margins are pushing the text off-center */
-  padding: 0; /* Ensure no padding is affecting the centering */
-  margin-bottom: 10px; /* Include padding and borders in the element's total width and height */
-  width: 100%; /* Full width to ensure proper centering */
-}
-
-.word-input::placeholder {
-  font-size: 4vw; /* Adjust the font size of the placeholder text as needed */
-  color: #888; /* Change the color if you want */
-  /* You can add other styles here if needed */
-}
-
-/* Styles for the input field */
-.word-input {
-  font-family: 'Helvetica', sans-serif;
-  font-size: 7vw; /* Increase the font size */
-  width: 90%; /* Slightly less than full width to add some margin */
-  max-width: 800px; /* Ensures it's not too wide on larger screens */
-  padding: 15px;
-  border: 2px solid #ddd;
-  border-radius: 5px;
-  color: transparent;
-  background-color: transparent;
-  text-align: center;
-  position: relative; /* Needed to establish a stacking context for z-index */
-  z-index: 1; /* Ensure the input is behind the overlay */
-  height: 120px;
-  margin-top: 10px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.input-overlay-container {
-  position: relative; /* Establishes the positioning context for its absolutely positioned children */
-  width: 90%; /* Same width as your input to match sizes */
-  max-width: 800px; /* Same max width as your input */
-  margin: 10px auto; /* Center the container */
-  align-items: center; /* Centers the content vertically */
-  text-align: center;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-.styled-overlay {
-  position: absolute; /* Position it directly over the input */
-  top: 0; /* Align to the top of the parent */
-  left: 0; /* Align to the left of the parent */
-  right: 0; /* Stretch to the right edge of the parent */
-  bottom: 0; /* Stretch to the bottom edge of the parent */
-  display: flex; /* Use flexbox to align children */
-  justify-content: center;
-  align-items: center; /* Centers the content vertically */
-  font-family: 'Helvetica', sans-serif;
-  text-align: center;
-  color: transparent; /* Makes the text color transparent */
-  pointer-events: none;
-  margin: 10px auto;
-  font-size: 7vw; /* Same font size as the input to match sizes */
-  z-index: 2; /* Ensures it is on top of the input field */
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Styles for the message display */
-.message {
-  font-family: 'Helvetica', sans-serif;
-  font-size: 2vw; /* Increase the font size */
-  text-align: center;
-  color: #333;
-}
-
-/* Center the container */
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* This will center children horizontally */
-  width: 100%;
+/* === LAYOUT =============================================================== */
+/* 3 columns = 1/5 (left) + 1/5 (spacer) + 3/5 (right) */
+.two-col{
+  display: grid;
+  grid-template-columns: 1fr 1fr 3fr;
+  gap: 1.25rem;
+  align-items: start;
+  padding: 2rem 1rem 1rem;              /* top margin */
+  max-width: 1400px;
   margin: 0 auto;
- }
+}
+.left  { grid-column: 1; display: grid; gap: 1rem; }
+.right { grid-column: 3; display: grid; gap: 1.25rem; place-items: center; position: relative; }
 
-.counter {
-  font-family: 'Helvetica', sans-serif;
-  font-size: 3em;
-  color: #333;
+@media (max-width: 880px){
+  .two-col{ grid-template-columns: 1fr; }
+  .right{ grid-column: 1; order: 1; }
+  .left{ grid-column: 1; order: 2; }
+}
+
+.card{
+  background: var(--card);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: var(--shadow);
+}
+
+h2{ font-size: 1.05rem; margin: 0 0 .75rem; }
+
+/* === Level dropdown ====================================================== */
+.level-select{
+  width: 100%;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  padding: .55rem .7rem;
+  font-weight: 700;
+  font-size: 1rem;
+  background: #fff;
+  color: #111;
+}
+.level-select:focus-visible{ outline: 3px solid var(--ring); outline-offset: 2px; }
+.level-select.l1{ border-color: #9be69b; box-shadow: inset 0 0 0 2px #e6f7e6; }
+.level-select.l2{ border-color: #b6ec86; box-shadow: inset 0 0 0 2px #ebfae0; }
+.level-select.l3{ border-color: #ffd166; box-shadow: inset 0 0 0 2px #fff8e1; }
+.level-select.l4{ border-color: #ff9f80; box-shadow: inset 0 0 0 2px #ffefea; }
+.level-select.l5{ border-color: #ff6b6b; box-shadow: inset 0 0 0 2px #ffe9e9; }
+
+/* === Goal card =========================================================== */
+.goal-form{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem .5rem;
+  align-items: end;
+}
+.field{ display: grid; gap: .25rem; }
+label{ font-size: .9rem; }
+input[type="number"]{
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  padding: .45rem .6rem;
+  font-size: 1rem;
+}
+input[type="number"]:focus-visible{ outline: 3px solid var(--ring); outline-offset: 2px; }
+input[type="number"]:disabled{
+  background:#eee; color:#777; border-color:#ddd;
+  cursor: not-allowed;
+}
+.buttons{ grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
+
+.btn{
+  appearance: none;
+  border: none;
+  border-radius: 9px;
+  padding: .7rem .9rem;
+  font-weight: 700;
+  background: var(--btn);
+  color: var(--btn-on);
+  cursor: pointer;
+}
+.btn.secondary{ background: #222; }
+.btn.success{ background: #0a8f3a; }
+.btn.wide{ width: 100%; }
+.btn:focus-visible{ outline: 3px solid var(--ring); outline-offset: 2px; }
+.btn:disabled{ opacity: .6; cursor: not-allowed; }
+
+.status{
+  margin:.75rem 0 0;
+  color: #000;
+  font-weight: 600;
+}
+
+.session-counters{
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: .5rem;
+  margin-top: .75rem;
+}
+.counter{
+  background: #fff;
+  border-radius: 10px;
+  padding: .65rem .5rem;
   text-align: center;
-  margin-top: 20px;
+  box-shadow: var(--shadow);
 }
+.counter > span{ display:block; font-size: 1.3rem; font-weight: 800; }
+.counter > small{ color: var(--muted); }
 
-.uppercase-letter {
-  font-size: 0.8em; /* or any size that is suitable */
+/* === Veil ================================================================ */
+.play-veil{
+  position: absolute; inset: 0; border-radius: 12px;
+  background: rgba(0,0,0,.06);
+  display: grid; place-items: center;
+  z-index: 5; pointer-events: auto;
 }
-
-.image-container {
-  position: relative;
-  display: inline-block; /* or block if you prefer */
-}
-
-.overlay {
-  background-color: white;
-  position: absolute;
-  width: calc(100% / var(--word-length)); /* This will be set by JavaScript */
-  height: 100%;
-  transition: background-color 0.3s; /* Smooth transition for the reveal */
-}
-
-/* Responsive adjustments with media queries */
-@media (max-width: 768px) {
-  /* Adjustments for tablets and mobile devices */
-  #wordDisplay {
-    font-size: 10vw; /* Further increase for smaller screens */
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .word-input {
-    font-size: 10vw; /* Adjust the font size for tablets */
-    height: 40px; /* Adjust height for tablets */
-    margin-top: 10px;
-  }
-  
-  .message {
-    font-size: 6vw;
-  }
-
-  .container {
-    margin-top: 20px; /* Add some top margin on smaller screens */
-  }
-  
-  .word-input::placeholder {
-  font-size: 5vw; /* Adjust the font size of the placeholder text as needed */
-  color: #888; /* Change the color if you want */
-  /* You can add other styles here if needed */
-}
-.styled-overlay {
-  position: absolute; /* Position it directly over the input */
-  top: 0; /* Align to the top of the parent */
-  left: 0; /* Align to the left of the parent */
-  right: 0; /* Stretch to the right edge of the parent */
-  bottom: 0; /* Stretch to the bottom edge of the parent */
-  display: flex; /* Use flexbox to align children */
-  justify-content: center;
-  align-items: center; /* Centers the content vertically */
-  font-family: 'Helvetica', sans-serif;
+.play-veil.hidden{ display: none; }
+.veil-box{
+  background: rgba(255,255,255,.9);
+  border: 2px solid #111;
+  border-radius: 12px;
+  padding: .8rem 1rem;
+  font-weight: 800;
   text-align: center;
-  color: transparent; /* Makes the text color transparent */
-  pointer-events: none;
-  margin: 10px auto;
-  font-size: 10vw; /* Same font size as the input to match sizes */
-  z-index: 2; /* Ensures it is on top of the input field */
-  height: 70px;
-  margin-left: auto;
-  margin-right: auto;
-}  
 }
 
-@media (max-width: 480px) {
-  /* Further adjustments for mobile devices */
-  #wordDisplay {
-    font-size: 10vw; /* Further increase for smaller screens */
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .word-input {
-    font-size: 10vw; /* Adjust the font size for tablets */
-    height: 40px; /* Adjust height for tablets */
-    margin-top: 10px;
-  }
-
-  .message {
-    font-size: 6vw;
-  }
-
-  .container {
-    margin-top: 20px; /* Add some top margin on very small screens */
-  }
-  .word-input::placeholder {
-  font-size: 5vw; /* Adjust the font size of the placeholder text as needed */
-  color: #888; /* Change the color if you want */
-  /* You can add other styles here if needed */
+/* === Bars (aligned with input width & padding) ========================== */
+.bars-wrap{ width: min(var(--play-max), 100%); }
+.bars{
+  width: 100%;
+  padding: 0 var(--play-pad-x);
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(18px, 1fr);
+  gap: var(--bar-gap);
 }
-.styled-overlay {
-  position: absolute; /* Position it directly over the input */
-  top: 0; /* Align to the top of the parent */
-  left: 0; /* Align to the left of the parent */
-  right: 0; /* Stretch to the right edge of the parent */
-  bottom: 0; /* Stretch to the bottom edge of the parent */
-  display: flex; /* Use flexbox to align children */
-  justify-content: center;
-  align-items: center; /* Centers the content vertically */
-  font-family: 'Helvetica', sans-serif;
-  text-align: center;
-  color: transparent; /* Makes the text color transparent */
-  pointer-events: none;
-  margin: 10px auto;
-  font-size: 10vw; /* Same font size as the input to match sizes */
-  z-index: 2; /* Ensures it is on top of the input field */
-  height: 70px;
-  margin-left: auto;
-  margin-right: auto;
-}  
+.bar{ height: 12px; border-radius: 4px; background: var(--bar); opacity: .85; }
+.bar.done{ background: var(--bar-done); }
+.bar.active{ background: var(--bar-partial); }
+
+/* === Input + overlay (bigger) ========================================== */
+.input-wrap{
+  width: min(var(--play-max), 100%);
+  display: grid;
+  gap: .45rem;
+  justify-items: center;
+}
+.type-stack{ position: relative; width: 100%; }
+.spell-input{
+  position: relative; z-index: 1; width: 100%;
+  font-family: var(--mono);
+  font-size: clamp(44px, 9vw, 72px);
+  letter-spacing: .05em;
+  padding: var(--play-pad-y) var(--play-pad-x);
+  border-radius: 12px;
+  border: 2px solid #111;
+  color: transparent;          /* hide underlying text so overlay controls color */
+  caret-color: #111; 
+  background: #fff;
+}
+.spell-input:disabled{ background:#f2f2f2; color:#777; border-color:#ddd; }
+.spell-input:focus-visible{ outline: 4px solid var(--ring); outline-offset: 2px; }
+
+/* Overlay now mirrors the bars grid: one cell per grapheme chunk */
+.overlay{
+  pointer-events: none; position: absolute; inset: 0;
+  padding: var(--play-pad-y) var(--play-pad-x);
+  font-family: var(--mono);
+  font-size: clamp(44px, 9vw, 72px);
+  letter-spacing: .05em;
+  opacity: 1;
+
+  display: grid;
+  grid-template-columns: repeat(var(--chunk-count, 1), 1fr);
+  column-gap: var(--bar-gap);
+}
+.overlay .cell{
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.06em;         /* small spacing between letters for readability */
+  min-height: 1em;
+}
+.overlay .ok{ color: var(--ok); }
+.overlay .bad{ color: var(--bad); }
+
+.prompt{ color: var(--muted); font-size: 1rem; }
+.tiny-controls{ color: var(--muted-2); font-size: .9rem; }
+
+/* === Picture + Score ==================================================== */
+.picture{
+  width: min(360px, 100%);
+  margin: .5rem auto 1rem;
+  display: grid;
+  justify-items: center;
+  gap: .5rem;
+}
+.picture img{ max-width: 100%; border-radius: 12px; box-shadow: var(--shadow); }
+.hidden{ display: none !important; }
+
+.scorecard{
+  width: 100%; background: #fff; border-radius: 12px; box-shadow: var(--shadow);
+  padding: 1rem; text-align: center;
+}
+.scorecard .grade{ font-size: clamp(40px, 10vw, 64px); font-weight: 900; margin: .25rem 0 .5rem; }
+.scorecard .meta{ color: #444; font-size: 1rem; }
+
+/* === Toast =============================================================== */
+.toast{
+  position: fixed; top: 12px; left: 50%;
+  transform: translateX(-50%) translateY(-10px);
+  background: #111; color: #fff;
+  padding: .65rem 1rem; border-radius: 999px;
+  font-weight: 800; letter-spacing: .02em; box-shadow: var(--shadow);
+  opacity: 0; transition: opacity .18s ease, transform .18s ease; z-index: 9999;
+}
+.toast.show{ opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* Dialog */
+dialog{
+  border: none; border-radius: 12px; padding: 1rem 1.25rem; box-shadow: var(--shadow);
+  max-width: 720px;
+}
+dialog::backdrop{ background: rgba(0,0,0,.3); }
+.dialog-actions{ display: flex; justify-content: flex-end; margin-top: .5rem; }
+
+/* Accessibility helpers */
+.visually-hidden{
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden;
+  clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+.skip-link{
+  position: absolute; left: -999px; top: -999px;
+}
+.skip-link:focus{
+  left: 8px; top: 8px; background: #000; color: #fff; padding: .5rem .75rem; border-radius: 6px;
 }
