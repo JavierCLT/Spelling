@@ -1,28 +1,145 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Typing Practice for Kids</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Say &amp; Spell — Parent‑guided Practice</title>
+  <link rel="stylesheet" href="styles.css" />
+  <meta name="theme-color" content="#0f6" />
 </head>
 <body>
-  <div class="container">
-    <div id="wordDisplay" class="word-display"></div>
-    
-    <!-- New container for input and overlay -->
-    <div class="input-overlay-container">
-      <input type="text" id="wordInput" class="word-input" autocomplete="off" placeholder="Type here..." autocapitalize="none" spellcheck="false">
-      <div id="styledOverlay" class="styled-overlay"></div>
-    </div>
-    
-    <div id="message" class="message"></div>
-    <img id="wordImage" src="" alt="Word Image">
-    <div id="counter" class="counter">0</div>
-  </div>
-  <!-- Include the canvas-confetti script via CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <script src="script.js"></script>
+  <a class="skip-link" href="#spellInput">Skip to typing</a>
+
+  <main id="app" class="two-col" aria-describedby="statusLine">
+    <!-- Left (narrow) -->
+    <aside class="left">
+
+      <!-- Levels -->
+      <section class="card" aria-labelledby="levelsHeading">
+        <h2 id="levelsHeading">Level</h2>
+        <label class="visually-hidden" for="levelSelect">Choose a level</label>
+        <select id="levelSelect" class="level-select" aria-label="Choose a level"></select>
+      </section>
+
+      <!-- Goal card -->
+      <section id="goalCard" class="card" aria-labelledby="goalHeading">
+        <h2 id="goalHeading">Goal</h2>
+        <form id="goalForm" class="goal-form" onsubmit="return false" aria-describedby="statusLine">
+          <div class="field">
+            <label for="goalWords">Goal words</label>
+            <input id="goalWords" name="goalWords" type="number" min="1" max="99" step="1" value="10" inputmode="numeric" />
+          </div>
+          <div class="field">
+            <label for="goalErrors">Max errors</label>
+            <input id="goalErrors" name="goalErrors" type="number" min="0" max="99" step="1" value="3" inputmode="numeric" />
+          </div>
+          <div class="buttons">
+            <button id="startBtn" type="button" class="btn success">Start</button>
+            <button id="resetBtn" type="button" class="btn secondary">Reset counters</button>
+          </div>
+        </form>
+
+        <p id="statusLine" class="status" role="status" aria-live="polite">
+          Progress: 0/<span data-bind="goalWords">10</span> words • Errors: <span data-bind="totalErrors">0</span> (cap ≤ <span data-bind="goalErrors">3</span>)
+        </p>
+
+        <div class="session-counters" aria-label="Session counters">
+          <div class="counter"><span id="correctCount">0</span><small>Correct words</small></div>
+          <div class="counter"><span id="totalErrors">0</span><small>Total errors</small></div>
+          <div class="counter"><span id="errorsThisWord">0</span><small>Errors this word</small></div>
+        </div>
+      </section>
+
+      <!-- Parent Guide -->
+      <section class="card" aria-labelledby="guideHeading">
+        <h2 id="guideHeading">Parent guide</h2>
+        <button id="aboutBtn" type="button" class="btn">How this works</button>
+      </section>
+
+    </aside>
+
+    <!-- Right (main) -->
+    <section class="right">
+
+      <!-- Veil shown until Start -->
+      <div id="playVeil" class="play-veil" aria-hidden="true">
+        <div class="veil-box" role="status" aria-live="polite">
+          Set your goal, then press <strong>Start</strong>.
+        </div>
+      </div>
+
+      <!-- Phoneme (Elkonin) bars -->
+      <section class="bars-wrap" aria-labelledby="barsHeading">
+        <h2 id="barsHeading" class="visually-hidden">Phoneme bars</h2>
+        <div id="bars" class="bars" aria-hidden="true"></div>
+      </section>
+
+      <!-- Input block -->
+      <section class="input-wrap">
+        <label class="visually-hidden" for="spellInput">Type the word</label>
+        <div class="type-stack" id="typeStack">
+          <input
+            id="spellInput"
+            class="spell-input"
+            type="text"
+            inputmode="text"
+            autocapitalize="none"
+            autocomplete="off"
+            spellcheck="false"
+            aria-describedby="prompt controls"
+            aria-label="Type the word you hear"
+            disabled
+          />
+          <div id="overlay" class="overlay" aria-hidden="true"></div>
+        </div>
+        <div id="prompt" class="prompt">Press Enter to listen</div>
+        <div id="controls" class="tiny-controls">Enter: hear • F1: slow • Backspace: fix</div>
+      </section>
+
+      <!-- Picture / Score -->
+      <figure id="picture" class="picture hidden">
+        <img id="wordImg" alt="" />
+        <figcaption id="imgCaption" class="visually-hidden"></figcaption>
+        <div id="scoreCard" class="scorecard hidden" role="status" aria-live="polite"></div>
+      </figure>
+
+    </section>
+  </main>
+
+  <!-- Top toast for completion -->
+  <div id="toast" class="toast" role="status" aria-live="assertive" hidden>WELL DONE!</div>
+
+  <!-- Parent Guide modal -->
+  <dialog id="aboutDialog" aria-labelledby="aboutTitle">
+    <form method="dialog">
+      <h2 id="aboutTitle">How this works (Parent Guide)</h2>
+      <p><strong>What it is:</strong> A speech‑to‑print spelling routine using Elkonin bars (one bar per sound), explicit grapheme‑phoneme mapping (digraphs &amp; vowel teams), and immediate corrective feedback.</p>
+      <ul>
+        <li><strong>Bars = sounds (phonemes)</strong>, not letters. e.g., <em>ship</em> → /sh/ /i/ /p/ → 3 bars.</li>
+        <li><strong>Two letters can spell one sound</strong> (digraphs &amp; vowel teams: sh, ch, th, wh, ck, ng, tch, ph, ai, ee, ea, oa, oo). Once a chunk is spelled, the whole bar turns green.</li>
+        <li><strong>Strict keyboard</strong>: one wrong letter locks input; Backspace to fix; Enter/F1 re‑play audio.</li>
+        <li><strong>Audio</strong>: local MP3 preferred for consistency; Web Speech TTS fallback.</li>
+        <li><strong>Who for?</strong> K–1 (and older learners who need decoding/spelling practice). Adults pick a level and set a small goal (N words, ≤ M errors).</li>
+        <li><strong>Tips</strong>: Have your child tap sounds, say each sound as they type, and use Backspace to correct immediately. Praise precision more than speed.</li>
+      </ul>
+      <p><small>Science‑of‑Reading aligned: phoneme awareness → phonics (GPC) → spelling with corrective feedback.</small></p>
+      <div class="dialog-actions">
+        <button value="cancel" class="btn secondary">Close</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- One external dependency (canvas-confetti) -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+  <script src="script.js" defer></script>
+
+  <!-- Service worker (optional) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').catch(()=>{});
+      });
+    }
+  </script>
 </body>
 </html>
